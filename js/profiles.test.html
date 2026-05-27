@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Pruebas · evaluación de perfiles</title>
+<style>
+  body { font-family: monospace; padding: 20px; max-width: 1000px; margin: 0 auto; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; font-size: 13px; }
+  th { background: #f0f0f0; }
+  .pass { color: #2f7d4f; font-weight: bold; }
+  .fail { color: #b54040; font-weight: bold; }
+  .summary { margin: 20px 0; padding: 12px; background: #f7f7f5; border-radius: 6px; }
+</style>
+</head>
+<body>
+<h1>Pruebas de evaluación de perfiles</h1>
+<div id="summary" class="summary"></div>
+<table id="results">
+  <thead><tr><th>#</th><th>Caso</th><th>Esperado</th><th>Obtenido</th><th>Status</th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<script src="profiles.js"></script>
+<script>
+// Helper: construye un mapa de promedios desde niveles deseados.
+// 'A'/'M'/'B' -> 4.2 / 3.0 / 2.0  (centrados respecto a los umbrales).
+function p(levels) {
+  const map = { A: 4.2, M: 3.0, B: 2.0 };
+  const o = {};
+  for (const k of Object.keys(levels)) o[k] = map[levels[k]];
+  return o;
+}
+
+const cases = [
+  // 1. Cultura abierta con presión operativa (más específico antes que abierta pura)
+  ['Cultura abierta con presión operativa', p({D1:'A',D2:'A',D3:'A',D4:'B',D5:'A',D6:'A',D7:'A',D8:'A'}), 'Cultura abierta con presión operativa'],
+  // 2. Cultura abierta con rezago digital (no cumple presión operativa porque D4 no es B)
+  ['Cultura abierta con rezago digital', p({D1:'A',D2:'A',D3:'M',D4:'M',D5:'M',D6:'B',D7:'A',D8:'A'}), 'Cultura abierta con rezago digital'],
+  // 3. Cultura de innovación abierta — debe disparar antes que aprendizaje_avanzado
+  ['Cultura de innovación abierta', p({D1:'A',D2:'A',D3:'A',D4:'M',D5:'M',D6:'M',D7:'A',D8:'A'}), 'Cultura de innovación abierta'],
+  // 4. Aprendizaje distribuido avanzado (no cumple cultura abierta porque D1 o D3 no es A)
+  ['Aprendizaje distribuido avanzado', p({D1:'M',D2:'A',D3:'M',D4:'M',D5:'M',D6:'A',D7:'A',D8:'M'}), 'Aprendizaje distribuido avanzado'],
+  // 5. Aprendizaje distribuido incipiente
+  ['Aprendizaje distribuido incipiente', p({D1:'M',D2:'A',D3:'M',D4:'M',D5:'M',D6:'A',D7:'M',D8:'M'}), 'Aprendizaje distribuido incipiente'],
+  // 6. Aprendizaje distribuido con silos
+  ['Aprendizaje distribuido con silos', p({D1:'M',D2:'A',D3:'M',D4:'M',D5:'M',D6:'A',D7:'B',D8:'M'}), 'Aprendizaje distribuido con silos'],
+  // 7. Burocracia innovadora liderada
+  ['Burocracia innovadora liderada', p({D1:'M',D2:'M',D3:'A',D4:'M',D5:'M',D6:'M',D7:'M',D8:'A'}), 'Burocracia innovadora liderada'],
+  // 8. Burocracia innovadora con fricción adaptativa (más laxa que las dos siguientes)
+  ['Burocracia innovadora con fricción adaptativa', p({D1:'M',D2:'M',D3:'A',D4:'M',D5:'M',D6:'M',D7:'M',D8:'M'}), 'Burocracia innovadora con fricción adaptativa'],
+  // 9. Burocracia innovadora (versión más extrema: D4 y D5 Bajos -> match pure profile first)
+  ['Burocracia innovadora', p({D1:'M',D2:'M',D3:'A',D4:'B',D5:'B',D6:'M',D7:'M',D8:'M'}), 'Burocracia innovadora'],
+  // 10. Innovación centralizada en transición colaborativa
+  ['Innovación centralizada en transición colaborativa', p({D1:'M',D2:'B',D3:'M',D4:'M',D5:'M',D6:'M',D7:'M',D8:'A'}), 'Innovación centralizada en transición colaborativa'],
+  // 11. Innovación centralizada y frágil
+  ['Innovación centralizada y frágil', p({D1:'M',D2:'B',D3:'M',D4:'M',D5:'M',D6:'M',D7:'B',D8:'A'}), 'Innovación centralizada y frágil'],
+  // 12. Cultura reactiva con liderazgo impulsor
+  ['Cultura reactiva con liderazgo impulsor', p({D1:'M',D2:'M',D3:'M',D4:'B',D5:'M',D6:'M',D7:'M',D8:'A'}), 'Cultura reactiva con liderazgo impulsor'],
+  // 13. Cultura reactiva basada en datos (D3 A pero D5 sólo M, no B — no es burocracia pura)
+  ['Cultura reactiva basada en datos', p({D1:'M',D2:'M',D3:'A',D4:'B',D5:'M',D6:'M',D7:'M',D8:'M'}), 'Cultura reactiva basada en datos'],
+  // 14. Cultura reactiva de urgencia (D1,D4,D5 todos Bajos; D3 no Alto)
+  ['Cultura reactiva de urgencia', p({D1:'B',D2:'M',D3:'M',D4:'B',D5:'B',D6:'M',D7:'M',D8:'M'}), 'Cultura reactiva de urgencia'],
+  // 15. Fallback "Perfil mixto / en transición"
+  ['Perfil mixto / en transición', p({D1:'M',D2:'M',D3:'M',D4:'M',D5:'M',D6:'M',D7:'M',D8:'M'}), 'Perfil mixto / en transición'],
+
+  // Casos límite de umbrales
+  ['Umbral 2.5 → Medio (no Bajo)',
+    { D1: 2.5, D2: 2.5, D3: 2.5, D4: 2.5, D5: 2.5, D6: 2.5, D7: 2.5, D8: 2.5 },
+    'Perfil mixto / en transición'],
+  ['Umbral 3.75 → Alto en todos pero D1·D2·D3·D7·D8 todos A → Cultura abierta',
+    { D1: 3.75, D2: 3.75, D3: 3.75, D4: 3.75, D5: 3.75, D6: 3.75, D7: 3.75, D8: 3.75 },
+    'Cultura de innovación abierta'],
+];
+
+const tbody = document.querySelector('#results tbody');
+let pass = 0, fail = 0;
+cases.forEach((c, i) => {
+  const [name, scores, expected] = c;
+  const result = window.PROFILES.evaluar(scores);
+  const got = result.perfil.nombre;
+  const ok = got === expected;
+  if (ok) pass++; else fail++;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${i + 1}</td>
+    <td>${name}</td>
+    <td>${expected}</td>
+    <td>${got}</td>
+    <td class="${ok ? 'pass' : 'fail'}">${ok ? 'PASS' : 'FAIL'}</td>`;
+  tbody.appendChild(tr);
+});
+document.getElementById('summary').innerHTML =
+  `<strong>${pass} / ${cases.length} casos pasan.</strong> ${fail ? `<span class="fail">${fail} fallos.</span>` : '✓ Todos verdes.'}`;
+</script>
+</body>
+</html>

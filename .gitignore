@@ -1,0 +1,21 @@
+# Datos sensibles de la investigación — contienen respuestas y emails reales
+*.xlsx
+*.xls
+*.csv
+
+# Volcados temporales y scratch
+xlsx_extracted/
+csv_out*/
+
+# Logs y editores
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node (por si se añade tooling después)
+node_modules/
+
+# Configuración local de Claude Code (no útil para el repo)
+.claude/

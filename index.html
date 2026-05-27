@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Diagnóstico de Cultura de Innovación · BARNA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">BARNA</span>
+      <span class="brand-sep" aria-hidden="true">·</span>
+      <span class="brand-tagline">Management School</span>
+    </div>
+    <div class="brand-context">Investigación INNOVA</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Diagnóstico de Cultura de Innovación</h1>
+    <p class="hero-lead">Un instrumento de autodiagnóstico para que tu organización identifique su perfil cultural frente a la innovación y la transformación digital.</p>
+  </div>
+</section>
+
+<main class="container">
+  <div id="progress" class="progress" aria-hidden="true">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-steps">
+      <span class="step active" data-step="1">1. Organización</span>
+      <span class="step" data-step="2">2. Cultura</span>
+      <span class="step" data-step="3">3. Reflexión</span>
+      <span class="step" data-step="4">4. Resultado</span>
+    </div>
+  </div>
+
+  <form id="wizard" novalidate>
+    <!-- Honeypot anti-bot: oculto para humanos, irresistible para bots. -->
+    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+      <label for="hp-website">Sitio web (no rellenar)</label>
+      <input type="text" id="hp-website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <!-- Paso 1: Demográficas -->
+    <section class="step-panel" id="step-1" data-step="1">
+      <h2>1 · Datos de la organización</h2>
+      <p class="lead">Cuéntanos brevemente sobre tu empresa y tu rol. Toma 1 minuto.</p>
+      <div id="demogFields"></div>
+      <div class="nav">
+        <button type="button" class="primary" data-next>Continuar</button>
+      </div>
+    </section>
+
+    <!-- Paso 2: Likert -->
+    <section class="step-panel hidden" id="step-2" data-step="2">
+      <h2>2 · Cultura cotidiana</h2>
+      <p class="lead">Para cada afirmación, selecciona el número que mejor describe la realidad cotidiana de tu organización.</p>
+      <div class="scale-legend" aria-hidden="true">
+        <span>1 · Totalmente en desacuerdo</span>
+        <span>5 · Totalmente de acuerdo</span>
+      </div>
+      <div id="likertGroups"></div>
+      <div class="nav">
+        <button type="button" data-prev>Atrás</button>
+        <button type="button" class="primary" data-next>Continuar</button>
+      </div>
+    </section>
+
+    <!-- Paso 3: Abiertas -->
+    <section class="step-panel hidden" id="step-3" data-step="3">
+      <h2>3 · Reflexiones abiertas</h2>
+      <p class="lead">Cinco preguntas cualitativas. Sirven a la investigación y son opcionales si no tienes tiempo, pero tus respuestas enriquecen mucho el análisis.</p>
+      <div id="openFields"></div>
+      <div class="nav">
+        <button type="button" data-prev>Atrás</button>
+        <button type="submit" class="primary" id="submitBtn">Ver mi resultado</button>
+      </div>
+    </section>
+
+    <!-- Paso 4: Resultado -->
+    <section class="step-panel hidden" id="step-4" data-step="4">
+      <h2>4 · Tu perfil de cultura de innovación</h2>
+
+      <div id="resultStatus" class="status"></div>
+
+      <div class="result-grid">
+        <div class="radar-wrap">
+          <canvas id="radar" aria-label="Gráfico de araña con las 8 dimensiones"></canvas>
+        </div>
+        <div class="profile-card">
+          <div class="profile-tag">Perfil identificado</div>
+          <h3 id="profileName">—</h3>
+          <p class="profile-condition" id="profileCondition"></p>
+          <p id="profileDescription"></p>
+          <div class="risk-box">
+            <strong>Implicaciones para tu transformación</strong>
+            <p id="profileRisk"></p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Detalle por dimensión</h3>
+      <table class="scores-table">
+        <thead>
+          <tr><th>Dimensión</th><th>Promedio (1–5)</th><th>Nivel</th></tr>
+        </thead>
+        <tbody id="scoresBody"></tbody>
+      </table>
+
+      <div class="nav no-print">
+        <button type="button" onclick="window.print()">Descargar mi resultado (PDF)</button>
+        <button type="button" onclick="location.reload()">Hacer otro diagnóstico</button>
+      </div>
+    </section>
+
+  </form>
+</main>
+
+<footer class="footer no-print">
+  <div class="container">
+    <small>Marco metodológico: Diagnóstico de Cultura de Innovación · 8 dimensiones · 50 ítems Likert. © BARNA.</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/profiles.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
