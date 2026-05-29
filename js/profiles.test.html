@@ -33,42 +33,55 @@ function p(levels) {
 }
 
 const cases = [
-  // 1. Cultura abierta con presión operativa (más específico antes que abierta pura)
-  ['Cultura abierta con presión operativa', p({D1:'A',D2:'A',D3:'A',D4:'B',D5:'A',D6:'A',D7:'A',D8:'A'}), 'Cultura abierta con presión operativa'],
-  // 2. Cultura abierta con rezago digital (no cumple presión operativa porque D4 no es B)
-  ['Cultura abierta con rezago digital', p({D1:'A',D2:'A',D3:'M',D4:'M',D5:'M',D6:'B',D7:'A',D8:'A'}), 'Cultura abierta con rezago digital'],
-  // 3. Cultura de innovación abierta — debe disparar antes que aprendizaje_avanzado
-  ['Cultura de innovación abierta', p({D1:'A',D2:'A',D3:'A',D4:'M',D5:'M',D6:'M',D7:'A',D8:'A'}), 'Cultura de innovación abierta'],
-  // 4. Aprendizaje distribuido avanzado (no cumple cultura abierta porque D1 o D3 no es A)
-  ['Aprendizaje distribuido avanzado', p({D1:'M',D2:'A',D3:'M',D4:'M',D5:'M',D6:'A',D7:'A',D8:'M'}), 'Aprendizaje distribuido avanzado'],
-  // 5. Aprendizaje distribuido incipiente
-  ['Aprendizaje distribuido incipiente', p({D1:'M',D2:'A',D3:'M',D4:'M',D5:'M',D6:'A',D7:'M',D8:'M'}), 'Aprendizaje distribuido incipiente'],
-  // 6. Aprendizaje distribuido con silos
-  ['Aprendizaje distribuido con silos', p({D1:'M',D2:'A',D3:'M',D4:'M',D5:'M',D6:'A',D7:'B',D8:'M'}), 'Aprendizaje distribuido con silos'],
-  // 7. Burocracia innovadora liderada
-  ['Burocracia innovadora liderada', p({D1:'M',D2:'M',D3:'A',D4:'M',D5:'M',D6:'M',D7:'M',D8:'A'}), 'Burocracia innovadora liderada'],
-  // 8. Burocracia innovadora con fricción adaptativa (más laxa que las dos siguientes)
-  ['Burocracia innovadora con fricción adaptativa', p({D1:'M',D2:'M',D3:'A',D4:'M',D5:'M',D6:'M',D7:'M',D8:'M'}), 'Burocracia innovadora con fricción adaptativa'],
-  // 9. Burocracia innovadora (versión más extrema: D4 y D5 Bajos -> match pure profile first)
-  ['Burocracia innovadora', p({D1:'M',D2:'M',D3:'A',D4:'B',D5:'B',D6:'M',D7:'M',D8:'M'}), 'Burocracia innovadora'],
-  // 10. Innovación centralizada en transición colaborativa
-  ['Innovación centralizada en transición colaborativa', p({D1:'M',D2:'B',D3:'M',D4:'M',D5:'M',D6:'M',D7:'M',D8:'A'}), 'Innovación centralizada en transición colaborativa'],
-  // 11. Innovación centralizada y frágil
-  ['Innovación centralizada y frágil', p({D1:'M',D2:'B',D3:'M',D4:'M',D5:'M',D6:'M',D7:'B',D8:'A'}), 'Innovación centralizada y frágil'],
-  // 12. Cultura reactiva con liderazgo impulsor
-  ['Cultura reactiva con liderazgo impulsor', p({D1:'M',D2:'M',D3:'M',D4:'B',D5:'M',D6:'M',D7:'M',D8:'A'}), 'Cultura reactiva con liderazgo impulsor'],
-  // 13. Cultura reactiva basada en datos (D3 A pero D5 sólo M, no B — no es burocracia pura)
-  ['Cultura reactiva basada en datos', p({D1:'M',D2:'M',D3:'A',D4:'B',D5:'M',D6:'M',D7:'M',D8:'M'}), 'Cultura reactiva basada en datos'],
-  // 14. Cultura reactiva de urgencia (D1,D4,D5 todos Bajos; D3 no Alto)
-  ['Cultura reactiva de urgencia', p({D1:'B',D2:'M',D3:'M',D4:'B',D5:'B',D6:'M',D7:'M',D8:'M'}), 'Cultura reactiva de urgencia'],
-  // 15. Fallback "Perfil mixto / en transición"
-  ['Perfil mixto / en transición', p({D1:'M',D2:'M',D3:'M',D4:'M',D5:'M',D6:'M',D7:'M',D8:'M'}), 'Perfil mixto / en transición'],
+  // 1. Cultura de innovación abierta
+  ['Cultura de innovación abierta',
+   p({D1:'A',D2:'A',D3:'A',D4:'M',D5:'M',D6:'M',D7:'A',D8:'A'}),
+   'Cultura de innovación abierta'],
+
+  // 2. Aprendizaje distribuido incipiente
+  ['Aprendizaje distribuido incipiente',
+   p({D1:'M',D2:'A',D3:'M',D4:'M',D5:'M',D6:'A',D7:'M',D8:'M'}),
+   'Aprendizaje distribuido incipiente'],
+
+  // 3. Burocracia innovadora
+  ['Burocracia innovadora',
+   p({D1:'M',D2:'M',D3:'A',D4:'B',D5:'B',D6:'M',D7:'M',D8:'M'}),
+   'Burocracia innovadora'],
+
+  // 4. Innovación centralizada y frágil
+  ['Innovación centralizada y frágil',
+   p({D1:'M',D2:'B',D3:'M',D4:'M',D5:'M',D6:'M',D7:'B',D8:'A'}),
+   'Innovación centralizada y frágil'],
+
+  // 5. Cultura reactiva de urgencia
+  ['Cultura reactiva de urgencia',
+   p({D1:'B',D2:'M',D3:'M',D4:'B',D5:'B',D6:'M',D7:'M',D8:'M'}),
+   'Cultura reactiva de urgencia'],
+
+  // 6. Fallback: todo medio
+  ['Fallback — todo medio',
+   p({D1:'M',D2:'M',D3:'M',D4:'M',D5:'M',D6:'M',D7:'M',D8:'M'}),
+   'Perfil mixto / en transición'],
+
+  // 7. Fallback: combinaciones que antes eran "mixtos" ahora caen al fallback
+  ['Fallback — antes "presión operativa" (D1·D2·D3·D7·D8 Alto + D4 Bajo)',
+   p({D1:'A',D2:'A',D3:'A',D4:'B',D5:'A',D6:'A',D7:'A',D8:'A'}),
+   'Cultura de innovación abierta'],  // sigue siendo abierta porque las 5 dims clave son Alto
+
+  ['Fallback — antes "rezago digital" (D1·D2·D7·D8 Alto + D6 Bajo, D3 Medio)',
+   p({D1:'A',D2:'A',D3:'M',D4:'M',D5:'M',D6:'B',D7:'A',D8:'A'}),
+   'Perfil mixto / en transición'],
+
+  ['Fallback — antes "reactiva basada en datos" (D4 Bajo + D3 Alto, D1 Medio)',
+   p({D1:'M',D2:'M',D3:'A',D4:'B',D5:'M',D6:'M',D7:'M',D8:'M'}),
+   'Perfil mixto / en transición'],
 
   // Casos límite de umbrales
   ['Umbral 2.5 → Medio (no Bajo)',
     { D1: 2.5, D2: 2.5, D3: 2.5, D4: 2.5, D5: 2.5, D6: 2.5, D7: 2.5, D8: 2.5 },
     'Perfil mixto / en transición'],
-  ['Umbral 3.75 → Alto en todos pero D1·D2·D3·D7·D8 todos A → Cultura abierta',
+
+  ['Umbral 3.75 → Alto en todos → Cultura abierta',
     { D1: 3.75, D2: 3.75, D3: 3.75, D4: 3.75, D5: 3.75, D6: 3.75, D7: 3.75, D8: 3.75 },
     'Cultura de innovación abierta'],
 ];

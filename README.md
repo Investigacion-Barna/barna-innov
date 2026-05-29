@@ -28,7 +28,7 @@ python3 -m http.server 8000
 ```
 
 Pruebas del motor de perfiles: abrir
-`http://localhost:8000/js/profiles.test.html`. Debe mostrar **17/17 PASS**.
+`http://localhost:8000/js/profiles.test.html`. Debe mostrar **11/11 PASS**.
 
 ## Conectar a Google Sheets
 
@@ -76,27 +76,23 @@ edita las constantes `THRESHOLDS` al inicio de [js/profiles.js](js/profiles.js)
 y vuelve a abrir `profiles.test.html` para confirmar que las reglas siguen
 clasificando correctamente.
 
-## Marco de los 14 perfiles
+## Marco de los 5 perfiles puros
 
-Las reglas siguen el documento "Reglas de perfiles culturales · ajustadas al
-marco 6.2 del instrumento". El primer match gana; el orden va de más
-específico a más general. Si nada matchea, se devuelve **"Perfil mixto / en
-transición"**.
+Las reglas siguen la Hoja 2 "Reglas de perfiles culturales · ajustadas al
+marco 6.2 del instrumento" del archivo de la investigación. Si la organización
+no cumple ninguno de los 5 perfiles puros, se devuelve **"Perfil mixto / en
+transición"** como fallback.
 
 | # | Perfil | Condición |
 |---|--------|-----------|
-| 1 | Cultura abierta con presión operativa | D1·D2·D3·D7·D8 Alto + D4 Bajo |
-| 2 | Cultura de innovación abierta | D1·D2·D3·D7·D8 Alto |
-| 3 | Cultura abierta con rezago digital | D1·D2·D7·D8 Alto + D6 Bajo/Medio |
-| 4 | Aprendizaje distribuido avanzado | D2·D6·D7 Alto |
-| 5 | Aprendizaje distribuido incipiente | D2·D6 Alto + D7 Medio |
-| 6 | Aprendizaje distribuido con silos | D2·D6 Alto + D7 Bajo |
-| 7 | Burocracia innovadora liderada | D3·D8 Alto + D4·D5 Bajo/Medio |
-| 8 | Cultura reactiva con liderazgo impulsor | D4 Bajo + D1·D5 Bajo/Medio + D8 Alto |
-| 9 | Burocracia innovadora | D3 Alto + D4·D5 Bajo |
-| 10 | Cultura reactiva de urgencia | D4·D1·D5 Bajo |
-| 11 | Cultura reactiva basada en datos | D4 Bajo + D1·D5 Bajo/Medio + D3 Alto |
-| 12 | Burocracia innovadora con fricción adaptativa | D3 Alto + D4·D5 Bajo/Medio |
-| 13 | Innovación centralizada en transición colaborativa | D8 Alto + D2 Bajo + D7 Medio |
-| 14 | Innovación centralizada y frágil | D8 Alto + D2 Bajo + D7 Bajo |
+| 1 | Cultura de innovación abierta | D1·D2·D3·D7·D8 Alto |
+| 2 | Aprendizaje distribuido incipiente | D2·D6 Alto + D7 Medio |
+| 3 | Burocracia innovadora | D3 Alto + D4·D5 Bajo |
+| 4 | Innovación centralizada y frágil | D8 Alto + D2·D7 Bajo |
+| 5 | Cultura reactiva de urgencia | D4·D1·D5 Bajo |
 | – | Perfil mixto / en transición | Fallback |
+
+Además del perfil global, cada respuesta recibe una **lectura detallada por
+ítem** generada desde [js/matrix.js](js/matrix.js) (la "Matriz de
+Interpretación" del archivo): 50 ítems con narrativa Bajo/Medio/Alto y la
+señal diagnóstica que mide cada uno.
