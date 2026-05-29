@@ -219,10 +219,17 @@
   let radarChart = null;
   function renderResult(result) {
     const { scores, niveles, perfil, cercanos } = result;
-    document.getElementById('profileName').textContent = perfil.nombre;
-    document.getElementById('profileCondition').textContent = perfil.condicion;
-    document.getElementById('profileDescription').textContent = perfil.descripcion;
-    document.getElementById('profileRisk').textContent = perfil.riesgo;
+
+    // Cuando es fallback con cercanos, sintetizamos la tarjeta usando los
+    // 2 perfiles más cercanos en lugar del texto genérico de "Perfil mixto".
+    const display = (cercanos && cercanos.length >= 2)
+      ? buildMixedDisplay(cercanos)
+      : perfil;
+
+    document.getElementById('profileName').textContent = display.nombre;
+    document.getElementById('profileCondition').textContent = display.condicion;
+    document.getElementById('profileDescription').textContent = display.descripcion;
+    document.getElementById('profileRisk').textContent = display.riesgo;
     renderNeighbors(cercanos);
 
     const labels = Object.keys(Q.dimensions).map((d) => `${d} — ${Q.dimensions[d].title}`);
@@ -272,6 +279,28 @@
     renderItemAnalysis(scores, niveles);
   }
 
+  // Construye la "tarjeta principal" cuando ningún perfil puro matchea:
+  // toma los nombres, descripciones y riesgos de los 2 perfiles más cercanos
+  // y los combina en un solo bloque hablándole directamente al encuestado.
+  function buildMixedDisplay(cercanos) {
+    const a = cercanos[0].profile;
+    const b = cercanos[1].profile;
+    const pctA = Math.round((cercanos[0].cumplidos / cercanos[0].total) * 100);
+    const pctB = Math.round((cercanos[1].cumplidos / cercanos[1].total) * 100);
+    return {
+      nombre: `${a.nombre} + ${b.nombre}`,
+      condicion: `Rasgos de ${a.nombre} (${pctA}%) · Rasgos de ${b.nombre} (${pctB}%)`,
+      descripcion:
+        `Tu organización combina elementos de dos perfiles culturales. ` +
+        `Predomina "${a.nombre}": ${a.descripcion} ` +
+        `Y al mismo tiempo aparecen rasgos de "${b.nombre}": ${b.descripcion}`,
+      riesgo:
+        `Como tu cultura mezcla dos perfiles, las implicaciones para tu transformación digital dependen de cuál predomine en cada decisión. ` +
+        `Desde "${a.nombre}" — ${a.riesgo} ` +
+        `Desde "${b.nombre}" — ${b.riesgo}`,
+    };
+  }
+
   // ===== RENDER: Perfiles cercanos (sólo en fallback) =====
   function renderNeighbors(cercanos) {
     const root = document.getElementById('profileNeighbors');
@@ -300,7 +329,7 @@
         </div>`;
     }).join('');
     root.innerHTML = `
-      <div class="neighbors-head">Tu perfil mezcla rasgos de:</div>
+      <div class="neighbors-head">Cómo se descompone tu mezcla:</div>
       ${items}`;
   }
 

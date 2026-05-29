@@ -5,10 +5,11 @@ BARNA. El encuestado completa **9 datos demográficos + 50 ítems Likert +
 5 preguntas abiertas** y al terminar ve **al instante**:
 
 - Un **gráfico de araña** con sus 8 dimensiones culturales (escala 1–5).
-- El **perfil cultural** que mejor describe a su empresa (1 de los 5 puros, o
-  "Perfil mixto / en transición").
-- Cuando el resultado es mixto, los **2 perfiles puros más cercanos** con el
-  detalle de qué dimensiones tendría que ajustar para encajar en cada uno.
+- El **perfil cultural** que mejor describe a su empresa. Si encaja
+  exactamente en uno de los 5 perfiles puros, se muestra ese. Si no, se
+  presenta como una **mezcla de los 2 perfiles puros más cercanos**
+  (ej. *"Burocracia innovadora + Aprendizaje distribuido incipiente"*) con
+  el desglose de qué dimensiones aportan a cada perfil.
 - Una **lectura detallada por ítem** según la Matriz de Interpretación del
   instrumento, con filtro para ver sólo los ítems bajos o sólo los altos.
 - Botón para **descargar el reporte en PDF** (incluye todo el análisis).
@@ -38,13 +39,14 @@ apps-script/webhook.gs ← Web App que recibe respuestas y las guarda en Sheets
    Bajo (< 2.5). Umbrales editables en `THRESHOLDS` al inicio de
    [js/profiles.js](js/profiles.js).
 3. **Asignación de perfil.** Se evalúan los 5 perfiles puros en orden de
-   especificidad. El primero cuyas condiciones se cumplan todas gana. Si
-   ninguno aplica → "Perfil mixto / en transición".
-4. **Cercanía (sólo en fallback).** Para cada perfil puro se calcula
-   `cumplidos − 0.5 × desviación`, donde desviación es la distancia ordinal
-   (Alto–Bajo cuenta 2; Alto–Medio o Medio–Bajo cuentan 1) en las
-   dimensiones que no matchearon. Los 2 perfiles con mejor score se muestran
-   en la tarjeta del fallback con sus desvíos concretos.
+   especificidad. El primero cuyas condiciones se cumplan todas gana.
+4. **Mezcla de perfiles cuando ninguno matchea exactamente.** Para cada
+   perfil puro se calcula `cumplidos − 0.5 × desviación`, donde desviación
+   es la distancia ordinal (Alto–Bajo cuenta 2; Alto–Medio o Medio–Bajo
+   cuentan 1). Los 2 perfiles con mejor score se combinan en una tarjeta
+   "*A + B*" que muestra la descripción y los riesgos de transformación de
+   ambos, más el desglose dimensión por dimensión. En el dataset interno
+   estos casos se etiquetan como `mixto_transicion` para análisis.
 5. **Análisis por ítem.** Para cada ítem, según el score del encuestado
    (1–2 → Bajo, 3 → Medio, 4–5 → Alto), se muestra la lectura interpretativa
    correspondiente extraída de la Matriz de Interpretación, junto con la
@@ -144,8 +146,9 @@ Arrastra la carpeta completa en [app.netlify.com/drop](https://app.netlify.com/d
 
 Las reglas siguen la **Hoja 2 "Reglas de perfiles culturales · ajustadas al
 marco 6.2"** del archivo de la investigación. Si la organización no cumple
-ninguno de los 5 perfiles puros, se devuelve **"Perfil mixto / en
-transición"** como fallback y se muestran los 2 perfiles puros más cercanos.
+ninguno de los 5 perfiles puros exactamente, el resultado se presenta como
+una **mezcla de los 2 perfiles puros más cercanos** (ej. *"Burocracia
+innovadora + Cultura reactiva de urgencia"*).
 
 | # | Perfil | Condición |
 |---|--------|-----------|
@@ -154,7 +157,6 @@ transición"** como fallback y se muestran los 2 perfiles puros más cercanos.
 | 3 | Burocracia innovadora | D3 Alto + D4·D5 Bajo |
 | 4 | Innovación centralizada y frágil | D8 Alto + D2·D7 Bajo |
 | 5 | Cultura reactiva de urgencia | D4·D1·D5 Bajo |
-| – | Perfil mixto / en transición | Fallback (muestra 2 más cercanos) |
 
 ## Matriz de Interpretación
 
