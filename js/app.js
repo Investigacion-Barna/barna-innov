@@ -13,6 +13,7 @@
 
   const Q = window.QUESTIONS;
   const P = window.PROFILES;
+  const M = window.MATRIX;
 
   // ===== STATE =====
   const state = {
@@ -266,6 +267,82 @@
         <td class="nivel-${niveles[d]}">${niveles[d]}</td>`;
       tbody.appendChild(tr);
     });
+
+    renderItemAnalysis(scores, niveles);
+  }
+
+  // ===== RENDER: Análisis detallado por ítem (Matriz de interpretación) =====
+  function renderItemAnalysis(scores, niveles) {
+    const root = document.getElementById('itemAnalysis');
+    root.innerHTML = '';
+
+    // Agrupar ítems de la matriz por dimensión
+    const byDim = {};
+    M.items.forEach((it) => { (byDim[it.dim] = byDim[it.dim] || []).push(it); });
+
+    Object.keys(byDim).forEach((dim, idx) => {
+      const dimItems = byDim[dim];
+      const dimAvg = scores[dim] != null ? scores[dim].toFixed(2) : '—';
+      const dimNivel = niveles[dim] || '—';
+      const dimTitle = M.dimTitles[dim] || dim;
+
+      // Contar respuestas por bucket
+      const counts = { low: 0, mid: 0, high: 0 };
+      dimItems.forEach((it) => {
+        const s = state.likert[it.code];
+        if (typeof s === 'number') counts[M.bucket(s)]++;
+      });
+
+      const details = document.createElement('details');
+      details.className = 'dim-analysis';
+      if (idx === 0) details.open = true;
+
+      const summary = document.createElement('summary');
+      summary.innerHTML = `
+        <span class="dim-analysis-code">${dim}</span>
+        <span class="dim-analysis-title">${dimTitle}</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">${dimAvg}/5</span>
+          <span class="nivel-${dimNivel}">${dimNivel}</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high" title="Items en nivel alto">▲ ${counts.high}</span>
+            <span class="cnt cnt-mid"  title="Items en nivel medio">● ${counts.mid}</span>
+            <span class="cnt cnt-low"  title="Items en nivel bajo">▼ ${counts.low}</span>
+          </span>
+        </span>`;
+      details.appendChild(summary);
+
+      const body = document.createElement('div');
+      body.className = 'dim-analysis-body';
+
+      dimItems.forEach((it) => {
+        const s = state.likert[it.code];
+        if (typeof s !== 'number') return;
+        const lvl = M.bucket(s);
+        const interp = it[lvl];
+
+        const card = document.createElement('div');
+        card.className = `item-card item-${lvl}`;
+        card.innerHTML = `
+          <div class="item-head">
+            <span class="item-code">${it.code}</span>
+            <span class="item-signal">${it.signal}</span>
+            <span class="item-score">${s}/5</span>
+          </div>
+          <p class="item-text">${escapeHtml(it.text)}</p>
+          <p class="item-interp"><strong>Lectura:</strong> ${escapeHtml(interp)}</p>`;
+        body.appendChild(card);
+      });
+
+      details.appendChild(body);
+      root.appendChild(details);
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
   }
 
   // ===== WEBHOOK =====
