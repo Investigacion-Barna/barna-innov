@@ -271,8 +271,8 @@
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><strong>${d}</strong> — ${Q.dimensions[d].title}</td>
-        <td>${scores[d].toFixed(2)}</td>
-        <td class="nivel-${niveles[d]}">${niveles[d]}</td>`;
+        <td data-label="Promedio (1–5)">${scores[d].toFixed(2)}</td>
+        <td data-label="Nivel" class="nivel-${niveles[d]}">${niveles[d]}</td>`;
       tbody.appendChild(tr);
     });
 
