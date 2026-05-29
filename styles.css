@@ -413,6 +413,51 @@ button[disabled] { opacity: .5; cursor: not-allowed; }
 .nivel-Bajo { color: var(--bad); font-weight: 700; }
 
 /* ===== Item analysis (matriz de interpretación) ===== */
+.analysis-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: var(--radius);
+}
+.analysis-filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+  margin-right: 4px;
+}
+.filter-chip {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  letter-spacing: .2px;
+  transition: all .12s ease;
+}
+.filter-chip:hover { border-color: var(--navy); }
+.filter-chip.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.filter-chip.cnt-low.active  { background: var(--bad);  border-color: var(--bad);  }
+.filter-chip.cnt-high.active { background: var(--ok);   border-color: var(--ok);   }
+
+/* Filtro: ocultar ítems del nivel no seleccionado */
+#itemAnalysis[data-filter="low"]  .item-card:not(.item-low)  { display: none; }
+#itemAnalysis[data-filter="high"] .item-card:not(.item-high) { display: none; }
+
+
 .section-lead {
   color: var(--muted);
   font-size: 14px;

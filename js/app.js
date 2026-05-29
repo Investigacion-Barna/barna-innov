@@ -275,6 +275,35 @@
   function renderItemAnalysis(scores, niveles) {
     const root = document.getElementById('itemAnalysis');
     root.innerHTML = '';
+    root.dataset.filter = 'all';
+
+    // Filtro
+    const filterBar = document.createElement('div');
+    filterBar.className = 'analysis-filter';
+    filterBar.innerHTML = `
+      <span class="analysis-filter-label">Filtrar:</span>
+      <button type="button" class="filter-chip active" data-filter-set="all">Todos los ítems</button>
+      <button type="button" class="filter-chip cnt-low"  data-filter-set="low">▼ Sólo bajos</button>
+      <button type="button" class="filter-chip cnt-high" data-filter-set="high">▲ Sólo altos</button>`;
+    filterBar.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-filter-set]');
+      if (!btn) return;
+      const sel = btn.dataset.filterSet;
+      root.dataset.filter = sel;
+      filterBar.querySelectorAll('.filter-chip').forEach((b) =>
+        b.classList.toggle('active', b.dataset.filterSet === sel));
+      // Re-collapsar y mostrar/ocultar dim-analysis sin matches
+      root.querySelectorAll('.dim-analysis').forEach((d) => {
+        const visible = d.querySelectorAll(
+          sel === 'all' ? '.item-card' :
+          sel === 'low' ? '.item-card.item-low' :
+                          '.item-card.item-high'
+        ).length;
+        d.style.display = visible ? '' : 'none';
+        if (visible && sel !== 'all') d.open = true;
+      });
+    });
+    root.appendChild(filterBar);
 
     // Agrupar ítems de la matriz por dimensión
     const byDim = {};
