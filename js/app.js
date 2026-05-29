@@ -218,11 +218,12 @@
   // ===== RENDER: Resultado =====
   let radarChart = null;
   function renderResult(result) {
-    const { scores, niveles, perfil } = result;
+    const { scores, niveles, perfil, cercanos } = result;
     document.getElementById('profileName').textContent = perfil.nombre;
     document.getElementById('profileCondition').textContent = perfil.condicion;
     document.getElementById('profileDescription').textContent = perfil.descripcion;
     document.getElementById('profileRisk').textContent = perfil.riesgo;
+    renderNeighbors(cercanos);
 
     const labels = Object.keys(Q.dimensions).map((d) => `${d} — ${Q.dimensions[d].title}`);
     const data = Object.keys(Q.dimensions).map((d) => +scores[d].toFixed(2));
@@ -269,6 +270,38 @@
     });
 
     renderItemAnalysis(scores, niveles);
+  }
+
+  // ===== RENDER: Perfiles cercanos (sólo en fallback) =====
+  function renderNeighbors(cercanos) {
+    const root = document.getElementById('profileNeighbors');
+    if (!cercanos || !cercanos.length) {
+      root.classList.add('hidden');
+      root.innerHTML = '';
+      return;
+    }
+    root.classList.remove('hidden');
+    const lvlClass = (n) => `nbr-pill nbr-${n.toLowerCase()}`;
+    const items = cercanos.map((c) => {
+      const pct = Math.round((c.cumplidos / c.total) * 100);
+      const desvList = c.desviados.length
+        ? `<ul class="nbr-gaps">${c.desviados.map((d) =>
+            `<li><strong>${d.dim}</strong> está en <span class="${lvlClass(d.real)}">${d.real}</span>, debería ser <span class="${lvlClass(d.esperado)}">${d.esperado}</span></li>`
+          ).join('')}</ul>`
+        : '<p class="nbr-perfect">Coincide en todas las dimensiones que define este perfil.</p>';
+      return `
+        <div class="neighbor">
+          <div class="nbr-head">
+            <span class="nbr-name">${escapeHtml(c.profile.nombre)}</span>
+            <span class="nbr-match">${c.cumplidos}/${c.total} coincidencias · ${pct}%</span>
+          </div>
+          <p class="nbr-cond">${escapeHtml(c.profile.condicion)}</p>
+          ${desvList}
+        </div>`;
+    }).join('');
+    root.innerHTML = `
+      <div class="neighbors-head">Tu perfil mezcla rasgos de:</div>
+      ${items}`;
   }
 
   // ===== RENDER: Análisis detallado por ítem (Matriz de interpretación) =====
