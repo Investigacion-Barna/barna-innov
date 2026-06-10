@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo · Cultura de innovación abierta + Innovación centralizada y frágil — BARNA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>
+.demo-badge {
+  display: inline-block; background: var(--blue); color: var(--navy);
+  padding: 4px 12px; border-radius: 999px; font-size: 11px;
+  font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.demo-note {
+  background: var(--panel); padding: 12px 16px;
+  border-left: 3px solid var(--blue); border-radius: 0 4px 4px 0;
+  margin-bottom: 26px; color: var(--muted); font-size: 13px;
+}
+.back-link {
+  display: inline-block; margin-top: 22px; color: var(--navy);
+  text-decoration: none; font-weight: 600; font-size: 14px;
+}
+.back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">BARNA</span>
+      <span class="brand-sep" aria-hidden="true">·</span>
+      <span class="brand-tagline">Management School</span>
+    </div>
+    <div class="brand-context">Demo · Investigación INNOVA</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="demo-badge">Demo de resultado #08</span>
+    <h1>Cultura de innovación abierta + Innovación centralizada y frágil</h1>
+    <p class="hero-lead">Cultura mixta entre dos perfiles puros</p>
+  </div>
+</section>
+
+<main class="container">
+  <section class="step-panel" style="margin-top: 24px;">
+    <p class="demo-note">Ejemplo sintético generado a partir de respuestas tipo. Muestra cómo se presentaría este resultado al encuestado en el wizard real.</p>
+
+    <div class="result-grid">
+      <div class="radar-wrap">
+        <canvas id="radar"></canvas>
+      </div>
+      <div class="profile-card">
+        <div class="profile-tag">Perfil identificado</div>
+        <h3>Cultura de innovación abierta + Innovación centralizada y frágil</h3>
+        <p class="profile-condition">Rasgos de Cultura de innovación abierta (60%) · Rasgos de Innovación centralizada y frágil (67%)</p>
+        <p>Tu organización combina elementos de dos perfiles culturales. Predomina &quot;Cultura de innovación abierta&quot;: La organización muestra aprendizaje colectivo, tolerancia real al error, decisiones basadas en evidencia y liderazgo que modela comportamientos innovadores. Y al mismo tiempo aparecen rasgos de &quot;Innovación centralizada y frágil&quot;: La organización innova cuando el líder principal impulsa directamente; alta dependencia del caudillo organizacional. La innovación no se sostiene sin presencia activa del liderazgo.</p>
+        <div class="risk-box">
+          <strong>Implicaciones para tu transformación</strong>
+          <p>Como tu cultura mezcla dos perfiles, las implicaciones para tu transformación digital dependen de cuál predomine en cada decisión. Desde &quot;Cultura de innovación abierta&quot; — Riesgo bajo para transformación digital; desafío: mantener y escalar la cultura al crecer. Desde &quot;Innovación centralizada y frágil&quot; — Riesgo: cambios en liderazgo paralizan innovación; adopción tecnológica bloqueada sin mandato explícito desde arriba.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-title">Detalle por dimensión</h3>
+    <table class="scores-table">
+      <thead><tr><th>Dimensión</th><th>Promedio (1–5)</th><th>Nivel</th></tr></thead>
+      <tbody><tr>
+    <td><strong>D1</strong> — Aprendizaje del fallo</td>
+    <td data-label="Promedio (1–5)">2.00</td>
+    <td data-label="Nivel" class="nivel-Bajo">Bajo</td>
+  </tr><tr>
+    <td><strong>D2</strong> — Apertura a ideas y diversidad</td>
+    <td data-label="Promedio (1–5)">2.00</td>
+    <td data-label="Nivel" class="nivel-Bajo">Bajo</td>
+  </tr><tr>
+    <td><strong>D3</strong> — Decisiones basadas en datos</td>
+    <td data-label="Promedio (1–5)">4.00</td>
+    <td data-label="Nivel" class="nivel-Alto">Alto</td>
+  </tr><tr>
+    <td><strong>D4</strong> — Tiempo y recursos para innovar</td>
+    <td data-label="Promedio (1–5)">3.00</td>
+    <td data-label="Nivel" class="nivel-Medio">Medio</td>
+  </tr><tr>
+    <td><strong>D5</strong> — Disposición al cambio</td>
+    <td data-label="Promedio (1–5)">3.00</td>
+    <td data-label="Nivel" class="nivel-Medio">Medio</td>
+  </tr><tr>
+    <td><strong>D6</strong> — Madurez digital e IA</td>
+    <td data-label="Promedio (1–5)">2.00</td>
+    <td data-label="Nivel" class="nivel-Bajo">Bajo</td>
+  </tr><tr>
+    <td><strong>D7</strong> — Colaboración interdepartamental</td>
+    <td data-label="Promedio (1–5)">4.00</td>
+    <td data-label="Nivel" class="nivel-Alto">Alto</td>
+  </tr><tr>
+    <td><strong>D8</strong> — Liderazgo que modela innovación</td>
+    <td data-label="Promedio (1–5)">4.00</td>
+    <td data-label="Nivel" class="nivel-Alto">Alto</td>
+  </tr></tbody>
+    </table>
+
+    <h3 class="section-title">Análisis detallado por ítem</h3>
+    <p class="section-lead">Para cada ítem, la lectura interpretativa del marco BARNA según la respuesta sintética generada.</p>
+    <div id="itemAnalysis"><details class="dim-analysis" open>
+      <summary>
+        <span class="dim-analysis-code">D1</span>
+        <span class="dim-analysis-title">Relación con el error y la incertidumbre</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">2.00/5</span>
+          <span class="nivel-Bajo">Bajo</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high">▲ 0</span>
+            <span class="cnt cnt-mid">● 0</span>
+            <span class="cnt cnt-low">▼ 6</span>
+          </span>
+        </span>
+      </summary>
+      <div class="dim-analysis-body"><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D1.1</span>
+          <span class="item-signal">Seguridad psicológica frente al error</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Cuando un proyecto falla en mi empresa, el líder que lo propuso asume responsabilidades públicamente y continúa siendo considerado para roles importantes.</p>
+        <p class="item-interp"><strong>Lectura:</strong> El error tiende a penalizar trayectorias o cerrar oportunidades futuras.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D1.2</span>
+          <span class="item-signal">Aprendizaje organizacional del fracaso</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">En mi empresa se documentan formalmente los aprendizajes obtenidos de proyectos que no funcionaron como se esperaba.</p>
+        <p class="item-interp"><strong>Lectura:</strong> No existe aprendizaje formal del fracaso; los errores se pierden o se silencian.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D1.3</span>
+          <span class="item-signal">Cultura no punitiva</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Cuando ocurre un error, en mi empresa se analiza primero cómo mejorar procesos, decisiones o formas de trabajo antes que señalar culpables.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Predomina la búsqueda de culpables sobre la mejora de procesos.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D1.4</span>
+          <span class="item-signal">Seguridad para experimentar</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Puedo proponer una idea arriesgada sin preocuparme de que, si no funciona, eso afecte cómo me ven en la empresa.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Las personas evitan ideas arriesgadas por temor a deteriorar su reputación interna.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D1.5</span>
+          <span class="item-signal">Transparencia frente al fracaso</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">En mi empresa, los proyectos que no logran los resultados esperados se reportan con transparencia a la alta dirección, incluyendo sus causas, aprendizajes y elementos de mejora.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los resultados fallidos tienden a maquillarse, ocultarse o comunicarse parcialmente.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D1.6</span>
+          <span class="item-signal">Espacios de aprendizaje del error</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">En mi empresa existe un espacio formal o informal donde se analiza por qué algo no salió bien.</p>
+        <p class="item-interp"><strong>Lectura:</strong> No hay espacios reconocibles para revisar fallos y aprender de ellos.</p>
+      </div></div>
+    </details>
+<details class="dim-analysis">
+      <summary>
+        <span class="dim-analysis-code">D2</span>
+        <span class="dim-analysis-title">Poder, jerarquía y origen de las ideas</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">2.00/5</span>
+          <span class="nivel-Bajo">Bajo</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high">▲ 0</span>
+            <span class="cnt cnt-mid">● 0</span>
+            <span class="cnt cnt-low">▼ 7</span>
+          </span>
+        </span>
+      </summary>
+      <div class="dim-analysis-body"><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D2.1</span>
+          <span class="item-signal">Origen distribuido de las ideas</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">En mi empresa, las ideas de mejora o innovación pueden surgir de distintos niveles de la organización, no solo de la alta dirección o de los dueños.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Las ideas están concentradas principalmente en la alta dirección o propiedad.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D2.2</span>
+          <span class="item-signal">Calidad de la retroalimentación a ideas ascendentes</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Cuando un empleado de niveles medios o bajos propone algo nuevo, recibe retroalimentación concreta, honesta y respetuosa.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Las propuestas desde niveles medios u operativos reciben poca respuesta o respuestas vagas.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D2.3</span>
+          <span class="item-signal">Meritocracia de ideas</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">En mi empresa, las ideas se evalúan principalmente por su calidad, viabilidad y aporte de valor, más que por el nivel jerárquico de quien las propone.</p>
+        <p class="item-interp"><strong>Lectura:</strong> El nivel jerárquico pesa más que la calidad o valor de la idea.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D2.4</span>
+          <span class="item-signal">Canales formales o informales de participación</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">En mi empresa existen mecanismos concretos (buzones, reuniones, plataformas) para que cualquier empleado proponga cambios.</p>
+        <p class="item-interp"><strong>Lectura:</strong> No existen mecanismos claros para canalizar propuestas de mejora.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D2.5</span>
+          <span class="item-signal">Apertura generacional a las ideas</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Los empleados más jóvenes tienen oportunidades reales de que sus ideas sean escuchadas y consideradas, independientemente de su edad o antigüedad en la empresa.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La edad o antigüedad limita la escucha de ideas de empleados jóvenes.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D2.6</span>
+          <span class="item-signal">Descentralización de la aprobación de ideas</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Una idea nueva puede avanzar en la organización cuando demuestra valor, aunque inicialmente no provenga de la máxima autoridad.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Las ideas dependen fuertemente del visto bueno inicial de la máxima autoridad.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D2.7</span>
+          <span class="item-signal">Equidad de género en la escucha de ideas</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Las mujeres tienen oportunidades reales de que sus ideas sean escuchadas y consideradas en igualdad de condiciones que los hombres.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La escucha y consideración de ideas presenta barreras de género.</p>
+      </div></div>
+    </details>
+<details class="dim-analysis">
+      <summary>
+        <span class="dim-analysis-code">D3</span>
+        <span class="dim-analysis-title">Cultura de datos vs. intuición e improvisación</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">4.00/5</span>
+          <span class="nivel-Alto">Alto</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high">▲ 6</span>
+            <span class="cnt cnt-mid">● 0</span>
+            <span class="cnt cnt-low">▼ 0</span>
+          </span>
+        </span>
+      </summary>
+      <div class="dim-analysis-body"><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D3.1</span>
+          <span class="item-signal">Orientación a evidencia en decisiones relevantes</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">En mi empresa se toman decisiones importantes basadas en datos concretos antes que en la intuición del directivo.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Las decisiones importantes se fundamentan prioritariamente en datos concretos.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D3.2</span>
+          <span class="item-signal">Apertura a revisar decisiones con evidencia</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Cuando los datos contradicen una decisión que ya se había tomado, generalmente se revisa esa decisión.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los datos tienen capacidad real de corregir o ajustar decisiones previas.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D3.3</span>
+          <span class="item-signal">Uso práctico de indicadores</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Los reportes e indicadores disponibles se utilizan de forma práctica para orientar las decisiones del día a día, incluso si no muestran los resultados esperados.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los reportes e indicadores guían decisiones diarias, incluso cuando revelan desviaciones.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D3.4</span>
+          <span class="item-signal">Contraste entre intuición y evidencia</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">En mi empresa, antes de tomar decisiones relevantes, se revisan los datos en lugar de hacer caso únicamente a la opinión, el &#39;olfato&#39; o la intuición de las personas con más experiencia acumulada.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los datos se revisan antes de decidir y contrastan la intuición o experiencia acumulada.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D3.5</span>
+          <span class="item-signal">Acceso a información para decidir</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Los equipos tienen acceso real y oportuno a los datos que necesitan para tomar decisiones en su área.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los equipos acceden oportunamente a los datos necesarios para decidir en su ámbito.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D3.6</span>
+          <span class="item-signal">Evaluación de impacto de los cambios</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">En mi empresa se mide sistemáticamente si los cambios implementados produjeron los resultados esperados.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La organización mide de forma sistemática los resultados de los cambios implementados.</p>
+      </div></div>
+    </details>
+<details class="dim-analysis">
+      <summary>
+        <span class="dim-analysis-code">D4</span>
+        <span class="dim-analysis-title">Relación con el tiempo y la velocidad</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">3.00/5</span>
+          <span class="nivel-Medio">Medio</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high">▲ 0</span>
+            <span class="cnt cnt-mid">● 6</span>
+            <span class="cnt cnt-low">▼ 0</span>
+          </span>
+        </span>
+      </summary>
+      <div class="dim-analysis-body"><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D4.1</span>
+          <span class="item-signal">Tiempo protegido para innovación</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">En mi empresa existe tiempo protegido (reuniones, sprints, proyectos piloto) dedicado exclusivamente a experimentar con ideas nuevas.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Existe algo de tiempo para innovar, pero es vulnerable a la presión operativa.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D4.2</span>
+          <span class="item-signal">Gestión de la urgencia operativa</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">En mi empresa, las urgencias del día a día se gestionan sin impedir de forma recurrente que los equipos trabajen en proyectos de mejora o innovación.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La urgencia interfiere con frecuencia, aunque algunas iniciativas logran avanzar.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D4.3</span>
+          <span class="item-signal">Balance entre corto plazo y futuro estratégico</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">En mi empresa, los recursos —tiempo, dinero y personas— se asignan considerando tanto las necesidades urgentes como las iniciativas importantes para el futuro.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La asignación equilibra parcialmente urgencias e iniciativas de futuro.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D4.4</span>
+          <span class="item-signal">Uso real de la planificación</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">La planificación anual de mi empresa es un ejercicio real que guía las decisiones durante el año.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La planificación orienta algunas decisiones, pero se debilita frente a la operación diaria.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D4.5</span>
+          <span class="item-signal">Continuidad de iniciativas estratégicas</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">Las iniciativas de largo plazo cuentan con seguimiento y continuidad, aun cuando surgen prioridades operativas.</p>
+        <p class="item-interp"><strong>Lectura:</strong> El seguimiento existe, pero la continuidad depende de la presión operativa.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D4.6</span>
+          <span class="item-signal">Protección directiva del tiempo para mejorar</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">Los líderes protegen activamente el tiempo de sus equipos para que puedan trabajar en proyectos de mejora.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Algunos líderes protegen tiempo, pero no es una práctica extendida.</p>
+      </div></div>
+    </details>
+<details class="dim-analysis">
+      <summary>
+        <span class="dim-analysis-code">D5</span>
+        <span class="dim-analysis-title">Identidad organizacional y apertura al cambio</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">3.00/5</span>
+          <span class="nivel-Medio">Medio</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high">▲ 0</span>
+            <span class="cnt cnt-mid">● 6</span>
+            <span class="cnt cnt-low">▼ 0</span>
+          </span>
+        </span>
+      </summary>
+      <div class="dim-analysis-body"><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D5.1</span>
+          <span class="item-signal">Apertura a formas distintas de trabajar</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">En mi empresa se escucha con genuina apertura a quien propone hacer las cosas de manera diferente.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Hay apertura parcial, dependiente del área, tema o persona que propone.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D5.2</span>
+          <span class="item-signal">Uso adaptativo de la tradición</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">En mi empresa, la historia y la tradición se utilizan como fuente de aprendizaje para impulsar mejoras, no como argumento para evitar cambios necesarios.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La historia inspira algunas mejoras, pero también limita cambios en ciertos temas.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D5.3</span>
+          <span class="item-signal">Aceptación del cuestionamiento constructivo</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">Los empleados que cuestionan procesos establecidos son vistos como posibles agentes de mejora, en lugar de problemáticos, siempre que presenten argumentos o propuestas constructivas.</p>
+        <p class="item-interp"><strong>Lectura:</strong> El cuestionamiento se acepta solo en ciertos casos o si proviene de ciertas personas.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D5.4</span>
+          <span class="item-signal">Capacidad de abandonar inercias</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">Mi empresa ha cambiado procesos o prácticas que siempre habíamos hecho igual, cuando encontramos mejores formas.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Algunos procesos cambian, pero otros permanecen por inercia.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D5.5</span>
+          <span class="item-signal">Evidencia frente a inercia cultural</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">En las decisiones estratégicas, la evidencia de que algo puede mejorar pesa más que la costumbre de hacerlo &#39;como siempre&#39;.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La evidencia influye, pero la costumbre todavía condiciona decisiones estratégicas.</p>
+      </div><div class="item-card item-mid">
+        <div class="item-head">
+          <span class="item-code">D5.6</span>
+          <span class="item-signal">Identidad organizacional adaptativa</span>
+          <span class="item-score">3/5</span>
+        </div>
+        <p class="item-text">El orgullo por la trayectoria de la empresa convive con una disposición real a revisar, actualizar o transformar prácticas cuando es necesario.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Hay orgullo institucional y disposición parcial a revisar ciertas prácticas.</p>
+      </div></div>
+    </details>
+<details class="dim-analysis">
+      <summary>
+        <span class="dim-analysis-code">D6</span>
+        <span class="dim-analysis-title">Capacidades digitales y disposición hacia la IA</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">2.00/5</span>
+          <span class="nivel-Bajo">Bajo</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high">▲ 0</span>
+            <span class="cnt cnt-mid">● 0</span>
+            <span class="cnt cnt-low">▼ 7</span>
+          </span>
+        </span>
+      </summary>
+      <div class="dim-analysis-body"><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D6.1</span>
+          <span class="item-signal">Competencia digital cotidiana</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">La mayoría de los empleados de mi empresa se siente cómoda usando herramientas digitales en su trabajo diario.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Predomina incomodidad o baja competencia en el uso cotidiano de herramientas digitales.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D6.2</span>
+          <span class="item-signal">Gestión transparente del temor al desplazamiento laboral</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">En mi empresa, las preocupaciones sobre la posible sustitución, reducción o transformación de puestos de trabajo por la automatización o la inteligencia artificial se conversan de forma abierta, transparente y responsable.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los temores sobre desplazamiento laboral por IA o automatización no se conversan o se manejan con opacidad.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D6.3</span>
+          <span class="item-signal">Comprensión directiva de IA</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Los líderes de mi empresa comprenden suficientemente las herramientas de inteligencia artificial disponibles para el negocio.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los líderes muestran comprensión limitada de herramientas de IA aplicables al negocio.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D6.4</span>
+          <span class="item-signal">Apertura psicológica hacia IA</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Si mañana se introdujera una herramienta de IA en mi empresa, la reacción predominante sería de curiosidad y apertura.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La reacción esperada sería rechazo, miedo, indiferencia o resistencia.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D6.5</span>
+          <span class="item-signal">Adopción responsable de automatización</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">En mi empresa se toma en cuenta si los empleados considerarían inapropiado o incómodo automatizar ciertas tareas, aunque sea técnicamente posible hacerlo.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La automatización se evalúa solo por factibilidad técnica, sin considerar incomodidad o sensibilidad humana.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D6.6</span>
+          <span class="item-signal">Base tecnológica disponible</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">La infraestructura tecnológica de mi empresa (internet, dispositivos, software) permite trabajar de forma eficiente.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La infraestructura tecnológica limita la eficiencia del trabajo.</p>
+      </div><div class="item-card item-low">
+        <div class="item-head">
+          <span class="item-code">D6.7</span>
+          <span class="item-signal">Evaluación de impacto laboral de la tecnología</span>
+          <span class="item-score">2/5</span>
+        </div>
+        <p class="item-text">Antes de adoptar una nueva tecnología, en mi empresa se pregunta cómo afectará a los puestos de trabajo actuales.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La adopción tecnológica se decide sin evaluar impactos en puestos actuales.</p>
+      </div></div>
+    </details>
+<details class="dim-analysis">
+      <summary>
+        <span class="dim-analysis-code">D7</span>
+        <span class="dim-analysis-title">Colaboración, silos y capital social interno</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">4.00/5</span>
+          <span class="nivel-Alto">Alto</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high">▲ 6</span>
+            <span class="cnt cnt-mid">● 0</span>
+            <span class="cnt cnt-low">▼ 0</span>
+          </span>
+        </span>
+      </summary>
+      <div class="dim-analysis-body"><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D7.1</span>
+          <span class="item-signal">Responsabilidad transversal por innovar</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">En mi empresa, la innovación es responsabilidad compartida por todos los departamentos, no solo del área de tecnología o marketing.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La innovación se entiende como responsabilidad compartida por todas las áreas.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D7.2</span>
+          <span class="item-signal">Colaboración interdepartamental</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Los equipos de distintas áreas colaboran con fluidez cuando un proyecto lo requiere.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Las áreas colaboran con fluidez cuando el proyecto lo necesita.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D7.3</span>
+          <span class="item-signal">Flujo de información entre áreas</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">En la práctica, los departamentos comparten información de manera oportuna y trabajan de forma coordinada entre sí cuando es necesario.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los departamentos comparten información oportunamente y coordinan acciones cuando hace falta.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D7.4</span>
+          <span class="item-signal">Gestión de tensiones interdepartamentales</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Las diferencias o tensiones entre departamentos se gestionan de forma que no impidan avanzar iniciativas que benefician a la empresa en general.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Las tensiones se gestionan sin impedir el avance de iniciativas beneficiosas.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D7.5</span>
+          <span class="item-signal">Autonomía colaborativa</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Cuando surge un problema que afecta a varias áreas, los equipos se coordinan rápido sin necesidad de que lo ordene la dirección.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los equipos se coordinan rápidamente ante problemas transversales sin depender siempre de la dirección.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D7.6</span>
+          <span class="item-signal">Análisis de causas de conflictos entre áreas</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">En mi empresa, cuando surgen conflictos interdepartamentales, se distingue si provienen de diferencias entre personas o de problemas en la estructura de trabajo.</p>
+        <p class="item-interp"><strong>Lectura:</strong> La organización diferencia si los conflictos provienen de personas o de estructura para abordarlos mejor.</p>
+      </div></div>
+    </details>
+<details class="dim-analysis">
+      <summary>
+        <span class="dim-analysis-code">D8</span>
+        <span class="dim-analysis-title">Liderazgo y modelaje de comportamientos innovadores</span>
+        <span class="dim-analysis-meta">
+          <span class="dim-analysis-score">4.00/5</span>
+          <span class="nivel-Alto">Alto</span>
+          <span class="dim-analysis-counts">
+            <span class="cnt cnt-high">▲ 6</span>
+            <span class="cnt cnt-mid">● 0</span>
+            <span class="cnt cnt-low">▼ 0</span>
+          </span>
+        </span>
+      </summary>
+      <div class="dim-analysis-body"><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D8.1</span>
+          <span class="item-signal">Modelaje digital del liderazgo</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Los líderes de mi empresa usan personalmente herramientas digitales nuevas y las recomiendan desde su propia experiencia.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los líderes usan herramientas digitales nuevas y recomiendan desde su experiencia.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D8.2</span>
+          <span class="item-signal">Humildad y aprendizaje directivo</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">He visto a un líder de mi empresa admitir en público que no sabía algo y aprender de ello.</p>
+        <p class="item-interp"><strong>Lectura:</strong> El liderazgo modela aprendizaje al admitir desconocimiento y aprender públicamente.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D8.3</span>
+          <span class="item-signal">Apertura directiva a argumentos</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Los líderes de mi empresa han cambiado de posición frente a una idea cuando les presentaron argumentos sólidos.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los líderes cambian de posición cuando reciben argumentos sólidos.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D8.4</span>
+          <span class="item-signal">Visibilidad del aprendizaje directivo</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">El tiempo que los líderes dedican a aprender cosas nuevas es visible para el resto de la organización.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los líderes hacen visible su dedicación a aprender cosas nuevas.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D8.5</span>
+          <span class="item-signal">Coherencia entre discurso y práctica del liderazgo</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">En mi empresa, el liderazgo predica la innovación en el discurso y también experimenta con cosas nuevas en la práctica.</p>
+        <p class="item-interp"><strong>Lectura:</strong> El liderazgo acompaña el discurso innovador con experimentación práctica.</p>
+      </div><div class="item-card item-high">
+        <div class="item-head">
+          <span class="item-code">D8.6</span>
+          <span class="item-signal">Modelaje conductual de valores innovadores</span>
+          <span class="item-score">4/5</span>
+        </div>
+        <p class="item-text">Los directivos de mi empresa modelan con su comportamiento cotidiano los valores de apertura y aprendizaje que exigen a otros.</p>
+        <p class="item-interp"><strong>Lectura:</strong> Los directivos modelan cotidianamente apertura y aprendizaje.</p>
+      </div></div>
+    </details></div>
+
+    <a href="index.html" class="back-link">← Volver al índice de demos</a>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+new Chart(document.getElementById('radar').getContext('2d'), {
+  type: 'radar',
+  data: {
+    labels: ["D1 — Aprendizaje del fallo","D2 — Apertura a ideas y diversidad","D3 — Decisiones basadas en datos","D4 — Tiempo y recursos para innovar","D5 — Disposición al cambio","D6 — Madurez digital e IA","D7 — Colaboración interdepartamental","D8 — Liderazgo que modela innovación"],
+    datasets: [{
+      label: 'Tu organización',
+      data: [2,2,4,3,3,2,4,4],
+      backgroundColor: 'rgba(108, 153, 208, 0.22)',
+      borderColor: 'rgba(0, 48, 87, 1)',
+      pointBackgroundColor: 'rgba(108, 153, 208, 1)',
+      pointBorderColor: 'rgba(0, 48, 87, 1)',
+      pointRadius: 4,
+      pointHoverRadius: 6,
+      borderWidth: 2,
+    }],
+  },
+  options: {
+    responsive: true,
+    scales: { r: { suggestedMin: 1, suggestedMax: 5, ticks: { stepSize: 1, backdropColor: 'transparent' }, pointLabels: { font: { size: 11 } } } },
+    plugins: { legend: { display: false } },
+  },
+});
+</script>
+</body>
+</html>

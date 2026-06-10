@@ -178,6 +178,24 @@ Cada ítem define una **señal diagnóstica** y tres narrativas (1-2 Bajo,
 resultado web cada ítem aparece como una tarjeta color-coded (rojo / ámbar /
 verde) con código, señal, score y la lectura interpretativa exacta.
 
+## Demos para presentación
+
+El directorio `demos/` contiene un HTML por cada resultado posible que el
+diagnóstico puede producir (5 perfiles puros + 20 mezclas ordenadas =
+**25 demos**). Cada uno es una página estática autocontenida que muestra
+el reporte final como lo vería un encuestado, sin tener que rellenar las
+50 preguntas en vivo.
+
+Para regenerarlos después de cambiar perfiles, matriz o estilos:
+
+```bash
+node scripts/generate-demos.js
+```
+
+El script enumera por fuerza bruta los 3⁸ = 6561 vectores posibles de
+niveles, encuentra un ejemplo representativo de cada resultado, genera el
+HTML correspondiente y produce un índice navegable en `demos/index.html`.
+
 ## Datos sensibles
 
 El `.xlsx` original con respuestas reales **no se sube al repo** (está en
