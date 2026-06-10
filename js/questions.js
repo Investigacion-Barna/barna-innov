@@ -104,15 +104,80 @@ window.QUESTIONS = (function () {
   ];
 
   // 8 dimensiones con título descriptivo (mostrado al encuestado sin revelar el código D#)
+  // y feedback corto por nivel para mostrar en la sección de detalle del resultado.
   const dimensions = {
-    D1: { title: 'Aprendizaje del fallo', subtitle: 'Cómo se gestionan los errores y proyectos fallidos' },
-    D2: { title: 'Apertura a ideas y diversidad', subtitle: 'Cómo circulan las propuestas dentro de la organización' },
-    D3: { title: 'Decisiones basadas en datos', subtitle: 'Cómo se usan los datos para decidir' },
-    D4: { title: 'Tiempo y recursos para innovar', subtitle: 'Cómo se balancea operación con iniciativas de mejora' },
-    D5: { title: 'Disposición al cambio', subtitle: 'Cómo se cuestiona "lo de siempre"' },
-    D6: { title: 'Madurez digital e IA', subtitle: 'Cómo se relaciona la organización con la tecnología' },
-    D7: { title: 'Colaboración interdepartamental', subtitle: 'Cómo trabajan las áreas entre sí' },
-    D8: { title: 'Liderazgo que modela innovación', subtitle: 'Cómo se comportan los líderes en lo cotidiano' },
+    D1: {
+      title: 'Aprendizaje del fallo',
+      subtitle: 'Cómo se gestionan los errores y proyectos fallidos',
+      feedback: {
+        Bajo:  'Tu organización penaliza el error y los proyectos fallidos tienden a silenciarse. Es difícil proponer ideas con incertidumbre sin temor reputacional, y no hay aprendizaje sistemático del fracaso.',
+        Medio: 'La tolerancia al error existe de forma parcial: algunas áreas analizan los fallos para mejorar, mientras otras buscan culpables. La transparencia ante resultados no esperados es desigual.',
+        Alto:  'Tu organización documenta los aprendizajes del fracaso, analiza errores como oportunidad de mejora y permite proponer ideas arriesgadas sin castigo desproporcionado.',
+      },
+    },
+    D2: {
+      title: 'Apertura a ideas y diversidad',
+      subtitle: 'Cómo circulan las propuestas dentro de la organización',
+      feedback: {
+        Bajo:  'Las ideas están concentradas en la alta dirección. Cuando alguien de niveles medios u operativos propone algo nuevo, recibe poca respuesta o el cargo pesa más que la calidad de la idea.',
+        Medio: 'Existen mecanismos para canalizar propuestas, pero su uso es desigual entre áreas y el visto bueno superior sigue siendo decisivo para que una idea avance.',
+        Alto:  'Las ideas fluyen desde todos los niveles. Se evalúan por su calidad y aporte, no por la jerarquía de quien las propone, y existen canales reales para participar.',
+      },
+    },
+    D3: {
+      title: 'Decisiones basadas en datos',
+      subtitle: 'Cómo se usan los datos para decidir',
+      feedback: {
+        Bajo:  'Las decisiones importantes dependen principalmente de la intuición o experiencia directiva. Los reportes disponibles no orientan la operación cotidiana ni corrigen decisiones ya tomadas.',
+        Medio: 'Los datos se consideran en algunas decisiones, pero la experiencia y la intuición todavía dominan. La medición de impacto de los cambios es ocasional.',
+        Alto:  'Tu organización fundamenta sus decisiones en datos concretos, mide sistemáticamente los resultados de los cambios y los reportes guían la operación diaria.',
+      },
+    },
+    D4: {
+      title: 'Tiempo y recursos para innovar',
+      subtitle: 'Cómo se balancea operación con iniciativas de mejora',
+      feedback: {
+        Bajo:  'La urgencia operativa consume casi todo el tiempo y los recursos. No hay espacio protegido para experimentar y las iniciativas de largo plazo se diluyen ante las prioridades del día.',
+        Medio: 'Existe algo de tiempo para mejora, pero es vulnerable a la presión operativa. La planificación anual orienta sólo parcialmente las decisiones.',
+        Alto:  'Tu organización reserva tiempo concreto para experimentar y sostiene iniciativas estratégicas con seguimiento, incluso cuando surgen urgencias.',
+      },
+    },
+    D5: {
+      title: 'Disposición al cambio',
+      subtitle: 'Cómo se cuestiona "lo de siempre"',
+      feedback: {
+        Bajo:  'La tradición se usa para mantener prácticas que deberían revisarse. Quienes cuestionan procesos establecidos son vistos como problemáticos en lugar de agentes de mejora.',
+        Medio: 'Hay apertura parcial al cambio: algunas prácticas se actualizan, pero la costumbre todavía pesa en decisiones estratégicas y muchos procesos permanecen por inercia.',
+        Alto:  'La trayectoria de tu empresa inspira mejoras, no las frena. La evidencia de que algo puede mejorar pesa más que la costumbre y los procesos se transforman cuando es necesario.',
+      },
+    },
+    D6: {
+      title: 'Madurez digital e IA',
+      subtitle: 'Cómo se relaciona la organización con la tecnología',
+      feedback: {
+        Bajo:  'La comodidad con herramientas digitales es baja, los líderes comprenden poco las herramientas de IA disponibles y la reacción ante nueva tecnología tiende a ser resistencia o miedo.',
+        Medio: 'La madurez digital es desigual entre áreas o generaciones. La IA genera curiosidad en algunos grupos y resistencia en otros, y la adopción se decide sin evaluar plenamente impactos laborales.',
+        Alto:  'Los empleados usan herramientas digitales con comodidad, los líderes comprenden la IA aplicable al negocio y predomina apertura a explorar nuevas tecnologías.',
+      },
+    },
+    D7: {
+      title: 'Colaboración interdepartamental',
+      subtitle: 'Cómo trabajan las áreas entre sí',
+      feedback: {
+        Bajo:  'Predominan los silos: la información no fluye entre áreas y las tensiones entre departamentos bloquean iniciativas transversales que beneficiarían a la empresa.',
+        Medio: 'La colaboración entre áreas ocurre, pero suele depender de relaciones personales o de instrucciones superiores en lugar de ser una práctica fluida.',
+        Alto:  'Las áreas colaboran con fluidez cuando un proyecto lo requiere, comparten información oportunamente y los conflictos se gestionan sin frenar iniciativas estratégicas.',
+      },
+    },
+    D8: {
+      title: 'Liderazgo que modela innovación',
+      subtitle: 'Cómo se comportan los líderes en lo cotidiano',
+      feedback: {
+        Bajo:  'El liderazgo predica la innovación en el discurso pero rara vez la modela: los líderes no admiten desconocimiento en público, dedican poco tiempo visible a aprender y sostienen posiciones aun ante argumentos sólidos.',
+        Medio: 'Algunos líderes modelan apertura y aprendizaje, pero no es una práctica extendida. El discurso y la práctica del liderazgo no siempre son coherentes.',
+        Alto:  'Los líderes usan herramientas nuevas en primera persona, admiten desconocimiento públicamente, cambian de posición ante buenos argumentos y modelan en lo cotidiano los valores que exigen.',
+      },
+    },
   };
 
   // 50 ítems Likert (1 = Totalmente en desacuerdo, 5 = Totalmente de acuerdo)

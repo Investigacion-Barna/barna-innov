@@ -13,7 +13,6 @@
 
   const Q = window.QUESTIONS;
   const P = window.PROFILES;
-  const M = window.MATRIX;
 
   // ===== STATE =====
   const state = {
@@ -264,18 +263,33 @@
       },
     });
 
-    const tbody = document.getElementById('scoresBody');
-    tbody.innerHTML = '';
-    Object.keys(Q.dimensions).forEach((d) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><strong>${d}</strong> — ${Q.dimensions[d].title}</td>
-        <td data-label="Promedio (1–5)">${scores[d].toFixed(2)}</td>
-        <td data-label="Nivel" class="nivel-${niveles[d]}">${niveles[d]}</td>`;
-      tbody.appendChild(tr);
-    });
+    renderDimGrid(scores, niveles);
+  }
 
-    renderItemAnalysis(scores, niveles);
+  // Tarjeta por dimensión con score, nivel y feedback corto según nivel.
+  function renderDimGrid(scores, niveles) {
+    const root = document.getElementById('scoresGrid');
+    root.innerHTML = '';
+    Object.keys(Q.dimensions).forEach((d) => {
+      const meta = Q.dimensions[d];
+      const nivel = niveles[d];
+      const feedback = (meta.feedback && meta.feedback[nivel]) || '';
+      const card = document.createElement('article');
+      card.className = `dim-card dim-card-${nivel}`;
+      card.innerHTML = `
+        <header class="dim-card-head">
+          <div>
+            <span class="dim-card-code">${d}</span>
+            <h4 class="dim-card-title">${escapeHtml(meta.title)}</h4>
+          </div>
+          <div class="dim-card-score">
+            <span class="dim-card-num">${scores[d].toFixed(2)}<span class="dim-card-out">/5</span></span>
+            <span class="dim-card-nivel nivel-${nivel}">${nivel}</span>
+          </div>
+        </header>
+        <p class="dim-card-feedback">${escapeHtml(feedback)}</p>`;
+      root.appendChild(card);
+    });
   }
 
   // Construye la "tarjeta principal" cuando ningún perfil puro matchea:
@@ -300,103 +314,6 @@
     };
   }
 
-
-  // ===== RENDER: Análisis detallado por ítem (Matriz de interpretación) =====
-  function renderItemAnalysis(scores, niveles) {
-    const root = document.getElementById('itemAnalysis');
-    root.innerHTML = '';
-    root.dataset.filter = 'all';
-
-    // Filtro
-    const filterBar = document.createElement('div');
-    filterBar.className = 'analysis-filter';
-    filterBar.innerHTML = `
-      <span class="analysis-filter-label">Filtrar:</span>
-      <button type="button" class="filter-chip active" data-filter-set="all">Todos los ítems</button>
-      <button type="button" class="filter-chip cnt-low"  data-filter-set="low">▼ Sólo bajos</button>
-      <button type="button" class="filter-chip cnt-high" data-filter-set="high">▲ Sólo altos</button>`;
-    filterBar.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-filter-set]');
-      if (!btn) return;
-      const sel = btn.dataset.filterSet;
-      root.dataset.filter = sel;
-      filterBar.querySelectorAll('.filter-chip').forEach((b) =>
-        b.classList.toggle('active', b.dataset.filterSet === sel));
-      // Re-collapsar y mostrar/ocultar dim-analysis sin matches
-      root.querySelectorAll('.dim-analysis').forEach((d) => {
-        const visible = d.querySelectorAll(
-          sel === 'all' ? '.item-card' :
-          sel === 'low' ? '.item-card.item-low' :
-                          '.item-card.item-high'
-        ).length;
-        d.style.display = visible ? '' : 'none';
-        if (visible && sel !== 'all') d.open = true;
-      });
-    });
-    root.appendChild(filterBar);
-
-    // Agrupar ítems de la matriz por dimensión
-    const byDim = {};
-    M.items.forEach((it) => { (byDim[it.dim] = byDim[it.dim] || []).push(it); });
-
-    Object.keys(byDim).forEach((dim, idx) => {
-      const dimItems = byDim[dim];
-      const dimAvg = scores[dim] != null ? scores[dim].toFixed(2) : '—';
-      const dimNivel = niveles[dim] || '—';
-      const dimTitle = M.dimTitles[dim] || dim;
-
-      // Contar respuestas por bucket
-      const counts = { low: 0, mid: 0, high: 0 };
-      dimItems.forEach((it) => {
-        const s = state.likert[it.code];
-        if (typeof s === 'number') counts[M.bucket(s)]++;
-      });
-
-      const details = document.createElement('details');
-      details.className = 'dim-analysis';
-      if (idx === 0) details.open = true;
-
-      const summary = document.createElement('summary');
-      summary.innerHTML = `
-        <span class="dim-analysis-code">${dim}</span>
-        <span class="dim-analysis-title">${dimTitle}</span>
-        <span class="dim-analysis-meta">
-          <span class="dim-analysis-score">${dimAvg}/5</span>
-          <span class="nivel-${dimNivel}">${dimNivel}</span>
-          <span class="dim-analysis-counts">
-            <span class="cnt cnt-high" title="Items en nivel alto">▲ ${counts.high}</span>
-            <span class="cnt cnt-mid"  title="Items en nivel medio">● ${counts.mid}</span>
-            <span class="cnt cnt-low"  title="Items en nivel bajo">▼ ${counts.low}</span>
-          </span>
-        </span>`;
-      details.appendChild(summary);
-
-      const body = document.createElement('div');
-      body.className = 'dim-analysis-body';
-
-      dimItems.forEach((it) => {
-        const s = state.likert[it.code];
-        if (typeof s !== 'number') return;
-        const lvl = M.bucket(s);
-        const interp = it[lvl];
-
-        const card = document.createElement('div');
-        card.className = `item-card item-${lvl}`;
-        card.innerHTML = `
-          <div class="item-head">
-            <span class="item-code">${it.code}</span>
-            <span class="item-signal">${it.signal}</span>
-            <span class="item-score">${s}/5</span>
-          </div>
-          <p class="item-text">${escapeHtml(it.text)}</p>
-          <p class="item-interp"><strong>Lectura:</strong> ${escapeHtml(interp)}</p>`;
-        body.appendChild(card);
-      });
-
-      details.appendChild(body);
-      root.appendChild(details);
-    });
-  }
 
   function escapeHtml(s) {
     return String(s || '').replace(/[&<>"']/g, (c) => ({

@@ -10,8 +10,8 @@ BARNA. El encuestado completa **9 datos demográficos + 50 ítems Likert +
   presenta como una **mezcla de los 2 perfiles puros más cercanos**
   (ej. *"Burocracia innovadora + Aprendizaje distribuido incipiente"*),
   con descripción y riesgos sintetizados de ambos perfiles.
-- Una **lectura detallada por ítem** según la Matriz de Interpretación del
-  instrumento, con filtro para ver sólo los ítems bajos o sólo los altos.
+- Un **detalle por dimensión** con el promedio, el nivel (Alto/Medio/Bajo)
+  y un **feedback corto** específico para cada combinación dimensión + nivel.
 - Botón para **descargar el reporte en PDF** (incluye todo el análisis).
 
 El backend opcional escribe cada respuesta en una Google Sheet vía Apps
@@ -23,9 +23,9 @@ automatizado.
 ```
 index.html               ← Wizard de 4 pasos + resultados
 styles.css               ← Estilos BARNA (mobile-first, print/PDF)
-js/questions.js          ← 9 demográficas + 50 Likert + 5 abiertas
+js/questions.js          ← Demográficas + 50 Likert + 5 abiertas + feedback por dim
 js/profiles.js           ← 5 perfiles puros + fallback, evaluador y cercanía
-js/matrix.js             ← Matriz de Interpretación · 50 ítems con narrativa
+js/matrix.js             ← Matriz de Interpretación · referencia documental (no en uso)
 js/app.js                ← Wizard, scoring, radar (Chart.js), webhook
 js/profiles.test.html    ← Pruebas en el navegador del motor de perfiles
 apps-script/webhook.gs   ← Web App que recibe respuestas y las guarda en Sheets
@@ -49,15 +49,11 @@ demos/                   ← 25 HTMLs autocontenidos · uno por resultado posibl
    "*A + B*" con su porcentaje de coincidencia, descripciones sintetizadas
    y los riesgos de transformación de ambos. En el dataset interno estos
    casos se etiquetan como `mixto_transicion` para facilitar el análisis.
-5. **Análisis por ítem.** Para cada ítem, según el score del encuestado
-   (1–2 → Bajo, 3 → Medio, 4–5 → Alto), se muestra la lectura interpretativa
-   correspondiente extraída de la Matriz de Interpretación, junto con la
-   señal diagnóstica que el ítem mide (ej. "Seguridad psicológica frente al
-   error", "Tiempo protegido para innovación").
-6. **Filtro.** Tres chips encima del análisis: *Todos*, *▼ Sólo bajos*,
-   *▲ Sólo altos*. Al filtrar, las dimensiones sin ítems del nivel
-   seleccionado se ocultan y las restantes se expanden, para enfocar de
-   inmediato fortalezas o debilidades.
+5. **Feedback por dimensión.** Cada una de las 8 dimensiones se presenta
+   como una tarjeta con su promedio, su clasificación (Alto/Medio/Bajo) y un
+   párrafo corto que describe qué significa ese resultado para la
+   organización. Los textos están definidos por (dim × nivel) = 24 lecturas
+   en `Q.dimensions[D#].feedback` dentro de [js/questions.js](js/questions.js).
 
 ## Probar localmente
 
@@ -140,9 +136,10 @@ Arrastra la carpeta completa en [app.netlify.com/drop](https://app.netlify.com/d
   `{dim, nivel}`) en [js/profiles.js](js/profiles.js). Modificar ahí cambia
   tanto el matching exacto como el cálculo de cercanía.
 
-- **Interpretación por ítem**: editar el array `items` en
-  [js/matrix.js](js/matrix.js). Cada ítem tiene `low`, `mid`, `high`,
-  `signal` (etiqueta corta) y `text` (la pregunta original).
+- **Feedback por dimensión**: cada `Q.dimensions[D#]` en
+  [js/questions.js](js/questions.js) expone `feedback: { Bajo, Medio, Alto }`.
+  Editar ahí cambia inmediatamente lo que ve el encuestado en su tarjeta de
+  detalle por dimensión y los demos pre-generados al regenerarlos.
 
 ## Marco de los 5 perfiles puros
 
@@ -160,25 +157,26 @@ innovadora + Cultura reactiva de urgencia"*).
 | 4 | Innovación centralizada y frágil | D8 Alto + D2·D7 Bajo |
 | 5 | Cultura reactiva de urgencia | D4·D1·D5 Bajo |
 
-## Matriz de Interpretación
+## 8 dimensiones del instrumento
 
-Fuente: hoja **"Matriz de Interpretación"** del archivo de la investigación.
-50 filas (una por ítem Likert), agrupadas en las 8 dimensiones oficiales del
-instrumento:
+Las dimensiones siguen el marco oficial BARNA. Cada una con su título
+amigable (mostrado al encuestado) y su feedback corto por nivel
+(Alto/Medio/Bajo) que aparece en la tarjeta de detalle del resultado.
 
-- **D1** · Relación con el error y la incertidumbre
-- **D2** · Poder, jerarquía y origen de las ideas
-- **D3** · Cultura de datos vs. intuición e improvisación
-- **D4** · Relación con el tiempo y la velocidad
-- **D5** · Identidad organizacional y apertura al cambio
-- **D6** · Capacidades digitales y disposición hacia la IA
-- **D7** · Colaboración, silos y capital social interno
-- **D8** · Liderazgo y modelaje de comportamientos innovadores
+- **D1** · Aprendizaje del fallo
+- **D2** · Apertura a ideas y diversidad
+- **D3** · Decisiones basadas en datos
+- **D4** · Tiempo y recursos para innovar
+- **D5** · Disposición al cambio
+- **D6** · Madurez digital e IA
+- **D7** · Colaboración interdepartamental
+- **D8** · Liderazgo que modela innovación
 
-Cada ítem define una **señal diagnóstica** y tres narrativas (1-2 Bajo,
-3 Medio, 4-5 Alto) que se muestran al encuestado según su respuesta. En el
-resultado web cada ítem aparece como una tarjeta color-coded (rojo / ámbar /
-verde) con código, señal, score y la lectura interpretativa exacta.
+El archivo [js/matrix.js](js/matrix.js) contiene la **Matriz de
+Interpretación** original (50 ítems con narrativa Bajo/Medio/Alto por ítem
++ señal diagnóstica). Hoy no se usa en runtime — sirve como referencia
+documental del marco BARNA por si en el futuro se quiere volver al
+análisis por ítem.
 
 ## Demos para presentación
 

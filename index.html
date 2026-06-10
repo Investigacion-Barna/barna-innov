@@ -106,16 +106,8 @@
       </div>
 
       <h3 class="section-title">Detalle por dimensión</h3>
-      <table class="scores-table">
-        <thead>
-          <tr><th>Dimensión</th><th>Promedio (1–5)</th><th>Nivel</th></tr>
-        </thead>
-        <tbody id="scoresBody"></tbody>
-      </table>
-
-      <h3 class="section-title">Análisis detallado por ítem</h3>
-      <p class="section-lead">Para cada ítem, la lectura interpretativa del marco BARNA según la respuesta que diste. Haz clic en cada dimensión para expandir.</p>
-      <div id="itemAnalysis"></div>
+      <p class="section-lead">Tu promedio, el nivel y una lectura corta de lo que ese resultado significa para tu organización.</p>
+      <div id="scoresGrid" class="dim-grid"></div>
 
       <div class="nav no-print">
         <button type="button" onclick="window.print()">Descargar mi resultado (PDF)</button>
@@ -135,7 +127,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="js/questions.js"></script>
 <script src="js/profiles.js"></script>
-<script src="js/matrix.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

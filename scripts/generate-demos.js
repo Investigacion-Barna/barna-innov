@@ -22,11 +22,9 @@ global.window = {};
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 require(path.join(PROJECT_ROOT, 'js/profiles.js'));
 require(path.join(PROJECT_ROOT, 'js/questions.js'));
-require(path.join(PROJECT_ROOT, 'js/matrix.js'));
 
 const P = global.window.PROFILES;
 const Q = global.window.QUESTIONS;
-const M = global.window.MATRIX;
 
 const DIMS = ['D1','D2','D3','D4','D5','D6','D7','D8'];
 const LEVELS = ['Bajo','Medio','Alto'];
@@ -101,60 +99,28 @@ function buildMixedDisplay(cercanos) {
   };
 }
 
-function renderItemAnalysis(stateLikert, scores, niveles) {
-  const byDim = {};
-  M.items.forEach((it) => { (byDim[it.dim] = byDim[it.dim] || []).push(it); });
-  const keys = Object.keys(byDim);
-  return keys.map((dim, idx) => {
-    const items = byDim[dim];
-    const dimAvg = scores[dim].toFixed(2);
-    const dimNivel = niveles[dim];
-    const dimTitle = M.dimTitles[dim] || dim;
-    const counts = { low: 0, mid: 0, high: 0 };
-    items.forEach((it) => {
-      const s = stateLikert[it.code];
-      if (typeof s === 'number') counts[M.bucket(s)]++;
-    });
-    const open = idx === 0 ? ' open' : '';
-    const itemCards = items.map((it) => {
-      const s = stateLikert[it.code];
-      if (typeof s !== 'number') return '';
-      const lvl = M.bucket(s);
-      const interp = it[lvl];
-      return `<div class="item-card item-${lvl}">
-        <div class="item-head">
-          <span class="item-code">${it.code}</span>
-          <span class="item-signal">${escapeHtml(it.signal)}</span>
-          <span class="item-score">${s}/5</span>
+function renderDimGrid(scores, niveles) {
+  return Object.keys(Q.dimensions).map((d) => {
+    const meta = Q.dimensions[d];
+    const nivel = niveles[d];
+    const feedback = (meta.feedback && meta.feedback[nivel]) || '';
+    return `<article class="dim-card dim-card-${nivel}">
+      <header class="dim-card-head">
+        <div>
+          <span class="dim-card-code">${d}</span>
+          <h4 class="dim-card-title">${escapeHtml(meta.title)}</h4>
         </div>
-        <p class="item-text">${escapeHtml(it.text)}</p>
-        <p class="item-interp"><strong>Lectura:</strong> ${escapeHtml(interp)}</p>
-      </div>`;
-    }).join('');
-    return `<details class="dim-analysis"${open}>
-      <summary>
-        <span class="dim-analysis-code">${dim}</span>
-        <span class="dim-analysis-title">${escapeHtml(dimTitle)}</span>
-        <span class="dim-analysis-meta">
-          <span class="dim-analysis-score">${dimAvg}/5</span>
-          <span class="nivel-${dimNivel}">${dimNivel}</span>
-          <span class="dim-analysis-counts">
-            <span class="cnt cnt-high">▲ ${counts.high}</span>
-            <span class="cnt cnt-mid">● ${counts.mid}</span>
-            <span class="cnt cnt-low">▼ ${counts.low}</span>
-          </span>
-        </span>
-      </summary>
-      <div class="dim-analysis-body">${itemCards}</div>
-    </details>`;
+        <div class="dim-card-score">
+          <span class="dim-card-num">${scores[d].toFixed(2)}<span class="dim-card-out">/5</span></span>
+          <span class="dim-card-nivel nivel-${nivel}">${nivel}</span>
+        </div>
+      </header>
+      <p class="dim-card-feedback">${escapeHtml(feedback)}</p>
+    </article>`;
   }).join('\n');
 }
 
 function renderDemo(order, niveles) {
-  // Likert sintético
-  const stateLikert = {};
-  for (const it of Q.likert) stateLikert[it.code] = nivelToScore(niveles[it.dim]);
-
   // Scores y resultado
   const scores = {};
   for (const d of DIMS) scores[d] = nivelToAvg(niveles[d]);
@@ -165,13 +131,7 @@ function renderDemo(order, niveles) {
   const labels = DIMS.map((d) => `${d} — ${Q.dimensions[d].title}`);
   const data = DIMS.map((d) => +scores[d].toFixed(2));
 
-  const scoresRows = DIMS.map((d) => `<tr>
-    <td><strong>${d}</strong> — ${escapeHtml(Q.dimensions[d].title)}</td>
-    <td data-label="Promedio (1–5)">${scores[d].toFixed(2)}</td>
-    <td data-label="Nivel" class="nivel-${r.niveles[d]}">${r.niveles[d]}</td>
-  </tr>`).join('');
-
-  const analysis = renderItemAnalysis(stateLikert, scores, r.niveles);
+  const dimGrid = renderDimGrid(scores, r.niveles);
 
   return `<!doctype html>
 <html lang="es">
@@ -244,14 +204,8 @@ function renderDemo(order, niveles) {
     </div>
 
     <h3 class="section-title">Detalle por dimensión</h3>
-    <table class="scores-table">
-      <thead><tr><th>Dimensión</th><th>Promedio (1–5)</th><th>Nivel</th></tr></thead>
-      <tbody>${scoresRows}</tbody>
-    </table>
-
-    <h3 class="section-title">Análisis detallado por ítem</h3>
-    <p class="section-lead">Para cada ítem, la lectura interpretativa del marco BARNA según la respuesta sintética generada.</p>
-    <div id="itemAnalysis">${analysis}</div>
+    <p class="section-lead">Promedio, nivel y lectura corta de cada una de las 8 dimensiones culturales.</p>
+    <div class="dim-grid">${dimGrid}</div>
 
     <a href="index.html" class="back-link">← Volver al índice de demos</a>
   </section>
