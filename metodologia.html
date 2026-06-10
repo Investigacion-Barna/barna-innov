@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Metodología · Diagnóstico de Cultura de Innovación BARNA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .toc {
+    background: var(--panel);
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    margin: 0 0 22px;
+  }
+  .toc-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .toc ol {
+    margin: 0; padding-left: 20px;
+    columns: 1; column-gap: 24px;
+  }
+  @media (min-width: 720px) { .toc ol { columns: 2; } }
+  .toc li { margin-bottom: 4px; font-size: 14px; }
+  .toc a { color: var(--navy); text-decoration: none; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Lista de dimensiones */
+  .dim-explain-list { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .dim-explain-list { grid-template-columns: 1fr 1fr; } }
+  .dim-explain {
+    display: flex; gap: 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--blue);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+  }
+  .dim-explain-code {
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--navy);
+    flex: 0 0 auto;
+    background: var(--panel);
+    padding: 4px 12px;
+    border-radius: var(--radius);
+    height: fit-content;
+  }
+  .dim-explain-body h3 {
+    margin: 0 0 4px;
+    font-size: 15px; font-weight: 700;
+    color: var(--ink-strong);
+  }
+  .dim-explain-body p {
+    margin: 0; font-size: 13px; color: var(--muted);
+  }
+
+  /* Escala Likert visual */
+  .scale-viz {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin: 18px 0;
+  }
+  .scale-viz .step {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .scale-viz .step-num {
+    font-size: 22px; font-weight: 700; color: var(--navy);
+    display: block;
+  }
+  .scale-viz .step-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--muted);
+    margin-top: 4px;
+    display: block;
+    line-height: 1.3;
+  }
+  @media (max-width: 540px) {
+    .scale-viz { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .scale-viz .step { padding: 8px 4px; }
+    .scale-viz .step-num { font-size: 18px; }
+    .scale-viz .step-label { font-size: 9px; }
+  }
+
+  /* Visualización de umbrales */
+  .threshold-viz {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1.25fr);
+    gap: 4px;
+    margin: 18px 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .threshold-band {
+    padding: 16px 14px;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+  }
+  .threshold-band .b-name {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.4px;
+    display: block;
+  }
+  .threshold-band .b-range {
+    font-size: 12px; opacity: .85;
+    display: block; margin-top: 4px;
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+  }
+  .threshold-bajo  { background: var(--bad); }
+  .threshold-medio { background: var(--warn); }
+  .threshold-alto  { background: var(--ok); }
+
+  /* Tabla de perfiles puros */
+  .profiles-list { display: flex; flex-direction: column; gap: 12px; }
+  .profile-row {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--navy);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+  }
+  .profile-row-head {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .profile-row-num {
+    font-size: 11px; font-weight: 700; color: var(--blue);
+    text-transform: uppercase; letter-spacing: 1.4px;
+  }
+  .profile-row-name {
+    margin: 0; font-size: 18px; font-weight: 700; color: var(--navy);
+  }
+  .profile-row-cond {
+    margin: 0 0 8px;
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-size: 12px; color: var(--muted);
+    background: var(--panel); padding: 6px 10px;
+    border-radius: var(--radius);
+    display: inline-block;
+  }
+  .profile-row-desc { margin: 8px 0 6px; font-size: 14px; color: var(--ink); }
+  .profile-row-risk {
+    margin: 6px 0 0; font-size: 13px; color: var(--muted);
+    background: var(--panel); padding: 8px 12px;
+    border-left: 3px solid var(--blue);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .profile-row-risk strong { color: var(--ink-strong); }
+
+  /* Ejemplo de cercanía */
+  .example-card {
+    background: var(--panel);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    margin: 14px 0;
+  }
+  .example-card h4 {
+    margin: 0 0 8px; font-size: 13px;
+    text-transform: uppercase; letter-spacing: 1.4px;
+    color: var(--navy);
+  }
+  .example-card code {
+    background: #fff; padding: 2px 8px; border-radius: var(--radius);
+    font-size: 12px; color: var(--navy);
+  }
+  .formula {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-size: 13px;
+    color: var(--ink);
+    margin: 14px 0;
+  }
+
+  /* Feedback grid: 8 dims, cada una con 3 niveles */
+  .feedback-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+  .feedback-dim {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .feedback-dim-head {
+    background: var(--panel);
+    padding: 12px 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .feedback-dim-code {
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-weight: 700; font-size: 13px; color: var(--navy);
+  }
+  .feedback-dim-title {
+    font-size: 15px; font-weight: 700; color: var(--ink-strong);
+  }
+  .feedback-rows {
+    display: grid; grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) { .feedback-rows { grid-template-columns: 1fr 1fr 1fr; } }
+  .feedback-row {
+    padding: 14px 16px;
+    border-top: 1px solid var(--line-soft);
+  }
+  @media (min-width: 900px) {
+    .feedback-row { border-top: none; border-left: 1px solid var(--line-soft); }
+    .feedback-row:first-child { border-left: none; }
+  }
+  .feedback-row-label {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.4px;
+    margin-bottom: 6px;
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+  .feedback-row-Bajo  .feedback-row-label { background: #fbeaea; color: var(--bad);  }
+  .feedback-row-Medio .feedback-row-label { background: #fbf2e1; color: var(--warn); }
+  .feedback-row-Alto  .feedback-row-label { background: #eaf7ed; color: var(--ok);   }
+  .feedback-text {
+    margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink);
+  }
+
+  /* CTA al final */
+  .cta-card {
+    background: var(--navy);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 26px 24px;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .cta-card h3 {
+    margin: 0 0 8px; color: #fff; font-size: 20px;
+  }
+  .cta-card p {
+    margin: 0 0 16px; color: #cdd6e3; font-size: 14px;
+  }
+  .cta-buttons {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  }
+  .cta-buttons a {
+    background: #fff; color: var(--navy);
+    padding: 11px 22px; border-radius: var(--radius);
+    font-weight: 700; text-decoration: none;
+    font-size: 14px; letter-spacing: .3px;
+    transition: background .12s ease;
+  }
+  .cta-buttons a:hover { background: var(--panel); }
+  .cta-buttons a.outline {
+    background: transparent; color: #fff;
+    border: 1px solid var(--blue);
+  }
+  .cta-buttons a.outline:hover { background: var(--navy-deep); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">BARNA</span>
+      <span class="brand-sep" aria-hidden="true">·</span>
+      <span class="brand-tagline">Management School</span>
+    </div>
+    <div class="brand-context">Metodología · Investigación INNOVA</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Cómo evalúa este diagnóstico</h1>
+    <p class="hero-lead">El marco detrás del diagnóstico de cultura de innovación: cómo se mide cada dimensión, cómo se calcula el nivel, cómo se asignan los perfiles culturales y qué significa cada resultado posible.</p>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="toc">
+    <div class="toc-label">Contenido</div>
+    <ol>
+      <li><a href="#dimensiones">Las 8 dimensiones culturales</a></li>
+      <li><a href="#escala">La escala Likert 1–5</a></li>
+      <li><a href="#umbrales">Del promedio al nivel</a></li>
+      <li><a href="#perfiles">Los 5 perfiles puros</a></li>
+      <li><a href="#mezcla">Cuando no hay un perfil puro</a></li>
+      <li><a href="#feedback">Feedback por dimensión × nivel</a></li>
+    </ol>
+  </div>
+
+  <section class="step-panel" id="dimensiones">
+    <h2>1 · Las 8 dimensiones culturales</h2>
+    <p class="lead">El instrumento mide ocho dimensiones de la cultura organizacional que influyen en su capacidad de innovar y transformarse digitalmente. Cada dimensión se evalúa con 6 o 7 ítems Likert, para un total de 50 ítems.</p>
+    <div id="dimensionsList" class="dim-explain-list"></div>
+  </section>
+
+  <section class="step-panel" id="escala">
+    <h2>2 · La escala Likert 1–5</h2>
+    <p class="lead">Para cada uno de los 50 ítems el encuestado responde en una escala de 1 a 5 según qué tanto la afirmación describe la realidad cotidiana de su organización.</p>
+    <div class="scale-viz">
+      <div class="step"><span class="step-num">1</span><span class="step-label">Totalmente<br>en desacuerdo</span></div>
+      <div class="step"><span class="step-num">2</span><span class="step-label">En<br>desacuerdo</span></div>
+      <div class="step"><span class="step-num">3</span><span class="step-label">Ni de acuerdo<br>ni en desacuerdo</span></div>
+      <div class="step"><span class="step-num">4</span><span class="step-label">De<br>acuerdo</span></div>
+      <div class="step"><span class="step-num">5</span><span class="step-label">Totalmente<br>de acuerdo</span></div>
+    </div>
+    <p>Los ítems están formulados en <strong>sentido positivo</strong>: una respuesta de 5 siempre indica mayor cultura innovadora. Esto permite promediar directamente sin invertir escalas.</p>
+  </section>
+
+  <section class="step-panel" id="umbrales">
+    <h2>3 · Del promedio al nivel</h2>
+    <p class="lead">Para cada dimensión se promedian sus ítems y el resultado se clasifica en tres niveles según los siguientes umbrales:</p>
+    <div class="threshold-viz">
+      <div class="threshold-band threshold-bajo">
+        <span class="b-name">Bajo</span>
+        <span class="b-range">promedio &lt; 2.5</span>
+      </div>
+      <div class="threshold-band threshold-medio">
+        <span class="b-name">Medio</span>
+        <span class="b-range">2.5 ≤ promedio &lt; 3.75</span>
+      </div>
+      <div class="threshold-band threshold-alto">
+        <span class="b-name">Alto</span>
+        <span class="b-range">promedio ≥ 3.75</span>
+      </div>
+    </div>
+    <p>Los umbrales se calibraron buscando bandas amplias para Medio (donde caen la mayoría de las organizaciones reales) y reservar Alto/Bajo para resultados verdaderamente marcados. Son editables en <code>THRESHOLDS</code> de <code>js/profiles.js</code> si la investigación pide ajustarlos en el futuro.</p>
+  </section>
+
+  <section class="step-panel" id="perfiles">
+    <h2>4 · Los 5 perfiles puros</h2>
+    <p class="lead">Cinco perfiles culturales definidos por el marco BARNA. Si las 8 dimensiones de la organización cumplen las condiciones de uno de ellos, se asigna ese perfil.</p>
+    <div id="profilesList" class="profiles-list"></div>
+  </section>
+
+  <section class="step-panel" id="mezcla">
+    <h2>5 · Cuando no hay un perfil puro</h2>
+    <p class="lead">Si ninguna de las 5 reglas matchea exactamente, se calcula la cercanía a cada perfil y se presenta el resultado como una mezcla de los 2 más cercanos.</p>
+
+    <div class="formula">
+score(perfil) = cumplidos − 0.5 × desviación
+    </div>
+
+    <p>donde:</p>
+    <ul>
+      <li><strong>cumplidos</strong>: cuántas de las condiciones del perfil se cumplen exactamente.</li>
+      <li><strong>desviación</strong>: suma de las distancias ordinales entre el nivel real y el requerido en las condiciones que no matchearon. Alto vs Bajo cuenta 2, Alto vs Medio o Medio vs Bajo cuentan 1, igual cuenta 0.</li>
+    </ul>
+
+    <div class="example-card">
+      <h4>Ejemplo</h4>
+      <p>Una organización con los siguientes niveles:</p>
+      <p><code>D1=Medio · D2=Medio · D3=Alto · D4=Bajo · D5=Medio · D6=Medio · D7=Medio · D8=Medio</code></p>
+      <p>No matchea ningún perfil puro. Calculando cercanía contra los 5:</p>
+      <ul>
+        <li><strong>Cultura reactiva basada en datos</strong> (mezcla de Reactiva + Burocracia): score 1.5</li>
+        <li><strong>Burocracia innovadora</strong>: matchea D3 Alto pero D4 está Bajo y D5 está Medio (falta D5 Bajo). Score más bajo.</li>
+      </ul>
+      <p>Los 2 perfiles con mejor score se combinan en una tarjeta <em>"A + B"</em> donde el primero predomina. Las descripciones y riesgos de ambos se sintetizan en un solo bloque.</p>
+    </div>
+
+    <p>Esto da <strong>25 resultados posibles</strong>: 5 perfiles puros + 20 mezclas ordenadas (A predomina, con rasgos de B). En <a href="demos/">la galería de demos</a> puedes ver un ejemplo de cada uno.</p>
+  </section>
+
+  <section class="step-panel" id="feedback">
+    <h2>6 · Feedback por dimensión × nivel</h2>
+    <p class="lead">Además del perfil global, cada dimensión recibe una lectura corta específica según su nivel. Estas son las 24 lecturas (8 dimensiones × 3 niveles) que aparecen en la tarjeta de detalle del resultado.</p>
+    <div id="feedbackGrid" class="feedback-grid"></div>
+  </section>
+
+  <div class="cta-card">
+    <h3>¿Listo para diagnosticar tu empresa?</h3>
+    <p>El cuestionario completo toma 10–15 minutos. Tu resultado aparece al instante.</p>
+    <div class="cta-buttons">
+      <a href="index.html">Empezar el diagnóstico</a>
+      <a href="demos/" class="outline">Ver galería de demos</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer no-print">
+  <div class="container">
+    <small>Diagnóstico de Cultura de Innovación · 8 dimensiones · 50 ítems Likert · 5 perfiles culturales. © BARNA Management School.</small>
+  </div>
+</footer>
+
+<script src="js/questions.js"></script>
+<script src="js/profiles.js"></script>
+<script>
+(function () {
+  const Q = window.QUESTIONS;
+  const P = window.PROFILES;
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  // ===== 1. Lista de dimensiones =====
+  document.getElementById('dimensionsList').innerHTML =
+    Object.entries(Q.dimensions).map(([code, meta]) => `
+      <div class="dim-explain">
+        <div class="dim-explain-code">${code}</div>
+        <div class="dim-explain-body">
+          <h3>${escapeHtml(meta.title)}</h3>
+          <p>${escapeHtml(meta.subtitle)}</p>
+        </div>
+      </div>
+    `).join('');
+
+  // ===== 4. Lista de perfiles puros =====
+  document.getElementById('profilesList').innerHTML =
+    P.profiles.map((p, i) => `
+      <div class="profile-row">
+        <div class="profile-row-head">
+          <span class="profile-row-num">Perfil #${i + 1}</span>
+          <h3 class="profile-row-name">${escapeHtml(p.nombre)}</h3>
+        </div>
+        <code class="profile-row-cond">${escapeHtml(p.condicion)}</code>
+        <p class="profile-row-desc">${escapeHtml(p.descripcion)}</p>
+        <p class="profile-row-risk"><strong>Implicaciones:</strong> ${escapeHtml(p.riesgo)}</p>
+      </div>
+    `).join('');
+
+  // ===== 6. Feedback grid =====
+  document.getElementById('feedbackGrid').innerHTML =
+    Object.entries(Q.dimensions).map(([code, meta]) => {
+      const f = meta.feedback || {};
+      return `
+        <div class="feedback-dim">
+          <div class="feedback-dim-head">
+            <span class="feedback-dim-code">${code}</span>
+            <span class="feedback-dim-title">${escapeHtml(meta.title)}</span>
+          </div>
+          <div class="feedback-rows">
+            ${['Bajo','Medio','Alto'].map((lvl) => `
+              <div class="feedback-row feedback-row-${lvl}">
+                <span class="feedback-row-label">${lvl}</span>
+                <p class="feedback-text">${escapeHtml(f[lvl] || '—')}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>`;
+    }).join('');
+})();
+</script>
+</body>
+</html>
