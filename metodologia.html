@@ -189,6 +189,21 @@
     font-size: 13px;
     color: var(--ink);
     margin: 14px 0;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .formula .where {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 8px;
+    display: block;
+  }
+  .formula-caption {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 4px 0 14px;
+    font-style: italic;
   }
 
   /* Feedback grid: 8 dims, cada una con 3 niveles */
@@ -312,6 +327,11 @@
     <h2>1 · Las 8 dimensiones culturales</h2>
     <p class="lead">El instrumento mide ocho dimensiones de la cultura organizacional que influyen en su capacidad de innovar y transformarse digitalmente. Cada dimensión se evalúa con 6 o 7 ítems Likert, para un total de 50 ítems.</p>
     <div id="dimensionsList" class="dim-explain-list"></div>
+
+    <h3 class="section-title" style="margin-top: 24px;">Promedio por dimensión</h3>
+    <p>Para cada dimensión D, se calcula la media aritmética de las respuestas Likert de sus ítems:</p>
+    <div class="formula">prom(D) = (1 / n_D) × Σ resp(i)   para i ∈ items(D)<span class="where">donde n_D = |items(D)| (6 ítems para la mayoría, 7 para D2 y D6), y resp(i) ∈ {1, 2, 3, 4, 5} es la respuesta Likert del encuestado al ítem i.</span></div>
+    <p class="formula-caption">El resultado prom(D) ∈ [1, 5] y representa qué tan presente está esa dimensión cultural en la organización.</p>
   </section>
 
   <section class="step-panel" id="escala">
@@ -344,28 +364,61 @@
         <span class="b-range">promedio ≥ 3.75</span>
       </div>
     </div>
+    <p>Formalmente, la función de clasificación se define como una función por tramos:</p>
+    <div class="formula">              ⎧ Bajo    si prom(D) &lt; 2.5
+nivel(D) = ⎨ Medio   si 2.5 ≤ prom(D) &lt; 3.75
+              ⎩ Alto    si prom(D) ≥ 3.75</div>
     <p>Los umbrales se calibraron buscando bandas amplias para Medio (donde caen la mayoría de las organizaciones reales) y reservar Alto/Bajo para resultados verdaderamente marcados. Son editables en <code>THRESHOLDS</code> de <code>js/profiles.js</code> si la investigación pide ajustarlos en el futuro.</p>
   </section>
 
   <section class="step-panel" id="perfiles">
     <h2>4 · Los 5 perfiles puros</h2>
     <p class="lead">Cinco perfiles culturales definidos por el marco BARNA. Si las 8 dimensiones de la organización cumplen las condiciones de uno de ellos, se asigna ese perfil.</p>
-    <div id="profilesList" class="profiles-list"></div>
+
+    <p>Cada perfil P se define como un conjunto de condiciones <code>P.targets</code>, donde cada condición es un par <em>(dimensión, nivel esperado)</em>. Un perfil <strong>matchea</strong> cuando <em>todas</em> sus condiciones se cumplen simultáneamente:</p>
+    <div class="formula">matches(P) ⇔ ∀ (d, l) ∈ P.targets : nivel(d) = l<span class="where">Es decir: el nivel real de cada dimensión d coincide exactamente con el nivel esperado l definido por el perfil. Si alguna condición falla, el perfil no matchea y se pasa al siguiente.</span></div>
+    <p class="formula-caption">Los perfiles se evalúan en orden de especificidad. El primer match gana. Si ningún perfil puro matchea, se pasa al cálculo de mezcla (sección 5).</p>
+
+    <div id="profilesList" class="profiles-list" style="margin-top: 18px;"></div>
   </section>
 
   <section class="step-panel" id="mezcla">
     <h2>5 · Cuando no hay un perfil puro</h2>
     <p class="lead">Si ninguna de las 5 reglas matchea exactamente, se calcula la cercanía a cada perfil y se presenta el resultado como una mezcla de los 2 más cercanos.</p>
 
-    <div class="formula">
-score(perfil) = cumplidos − 0.5 × desviación
-    </div>
+    <h3 class="section-title" style="margin-top: 20px;">Paso 1 · Rango y distancia ordinal entre niveles</h3>
+    <p>Asignamos un valor entero a cada nivel para poder medir cuán cerca está un nivel real del esperado:</p>
+    <div class="formula">rango(Bajo) = 0,   rango(Medio) = 1,   rango(Alto) = 2
 
-    <p>donde:</p>
-    <ul>
-      <li><strong>cumplidos</strong>: cuántas de las condiciones del perfil se cumplen exactamente.</li>
-      <li><strong>desviación</strong>: suma de las distancias ordinales entre el nivel real y el requerido en las condiciones que no matchearon. Alto vs Bajo cuenta 2, Alto vs Medio o Medio vs Bajo cuentan 1, igual cuenta 0.</li>
-    </ul>
+dist(a, b) = | rango(a) − rango(b) |<span class="where">Distancia ordinal: 0 si son iguales, 1 si están adyacentes (Bajo↔Medio o Medio↔Alto), 2 si son opuestos (Bajo↔Alto).</span></div>
+
+    <h3 class="section-title" style="margin-top: 20px;">Paso 2 · Cumplidos y desviación de un perfil</h3>
+    <p>Para cada perfil P, contamos cuántas condiciones se cumplen y sumamos la distancia de las que no:</p>
+    <div class="formula">cumplidos(P) = #{ (d, l) ∈ P.targets : nivel(d) = l }
+
+desviación(P) =      Σ      dist(nivel(d), l)
+                (d, l) ∈ P.targets
+                  con nivel(d) ≠ l<span class="where">cumplidos(P) ∈ {0, 1, ..., |P.targets|}; desviación(P) ∈ {0, 1, ..., 2 × |P.targets|}.</span></div>
+
+    <h3 class="section-title" style="margin-top: 20px;">Paso 3 · Score de cercanía</h3>
+    <p>La puntuación final de un perfil pondera los aciertos contra las desviaciones:</p>
+    <div class="formula">score(P) = cumplidos(P) − 0.5 × desviación(P)<span class="where">El coeficiente 0.5 hace que un match exacto valga el doble que una desviación de 1 nivel: prioriza aciertos sin penalizar excesivamente las desviaciones cercanas.</span></div>
+
+    <h3 class="section-title" style="margin-top: 20px;">Paso 4 · Selección de la mezcla</h3>
+    <p>Ordenamos los 5 perfiles por score descendente y tomamos los 2 primeros. El primero <strong>predomina</strong> en la presentación final:</p>
+    <div class="formula">P₁, P₂, P₃, P₄, P₅ = sort(perfiles, key = score, desc)
+
+mezcla = (P₁, P₂)   // P₁ predomina, con rasgos de P₂</div>
+
+    <h3 class="section-title" style="margin-top: 20px;">Paso 5 · Porcentaje de coincidencia mostrado</h3>
+    <p>Para cada uno de los 2 perfiles de la mezcla, se muestra al encuestado un porcentaje de coincidencia calculado como:</p>
+    <div class="formula">pct(P) = round( cumplidos(P) / |P.targets| × 100 )<span class="where">Ejemplo: si P tiene 3 targets y cumple 2, pct(P) = round(66.67) = 67%.</span></div>
+
+    <h3 class="section-title" style="margin-top: 20px;">Resumen del flujo</h3>
+    <p>El flujo completo para asignar un resultado a un encuestado se puede expresar como:</p>
+    <div class="formula">resultado(encuestado) =
+    perfil_puro   si ∃ P : matches(P)
+    mezcla(P₁,P₂) en otro caso<span class="where">donde (P₁, P₂) son los dos perfiles con mayor score(P).</span></div>
 
     <div class="example-card">
       <h4>Ejemplo</h4>
