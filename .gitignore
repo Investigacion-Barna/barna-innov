@@ -7,6 +7,9 @@
 xlsx_extracted/
 csv_out*/
 
+# Reportes personalizados por encuestado · contienen emails y respuestas reales
+reportes/
+
 # Logs y editores
 *.log
 .DS_Store
