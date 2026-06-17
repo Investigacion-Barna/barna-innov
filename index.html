@@ -188,12 +188,16 @@
   .director-avatar {
     width: 100%; max-width: 180px;
     aspect-ratio: 1;
-    background: var(--panel);
     border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 48px; font-weight: 700;
-    color: var(--navy);
-    letter-spacing: 1px;
+    overflow: hidden;
+    background: var(--panel);
+    border: 3px solid var(--panel);
+    box-shadow: 0 1px 4px rgba(0, 48, 87, .08);
+  }
+  .director-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .director-info .role {
     font-size: 11px; font-weight: 700;
@@ -415,7 +419,9 @@
       <div class="section-eyebrow">Dirección</div>
       <h2 class="section-title">Liderazgo del Centro</h2>
       <div class="director-card">
-        <div class="director-avatar" aria-hidden="true">KPT</div>
+        <div class="director-avatar">
+          <img src="assets/img/karina-perez-teruel.jpeg" alt="Dra. Karina Pérez Teruel, directora del Centro" loading="lazy">
+        </div>
         <div class="director-info">
           <div class="role">Directora</div>
           <h3>Dra. Karina Pérez Teruel</h3>
