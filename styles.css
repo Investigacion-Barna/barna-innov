@@ -321,6 +321,12 @@ button[disabled] { opacity: .5; cursor: not-allowed; }
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 18px;
+  display: flex;
+  justify-content: center;
+}
+.radar-wrap canvas {
+  max-width: 560px;
+  max-height: 560px;
 }
 .profile-card {
   background: var(--navy);
@@ -497,7 +503,6 @@ button[disabled] { opacity: .5; cursor: not-allowed; }
 @media (min-width: 720px) {
   .hero h1 { font-size: 42px; }
   .likert-item { grid-template-columns: 1fr 380px; align-items: center; }
-  .result-grid { grid-template-columns: 1fr 1fr; }
 }
 
 /* Tablet / phone landscape (≤ 720px) */
