@@ -25,10 +25,9 @@ services:
         - traefik.enable=true
         - traefik.docker.network=vitalia-net
 
-        # Router HTTPS para innovado.barna.edu.do
+        # Router HTTP para innovado.barna.edu.do (Cloudflare hace el TLS)
         - traefik.http.routers.innovado.rule=Host(`innovado.barna.edu.do`)
-        - traefik.http.routers.innovado.entrypoints=websecure
-        - traefik.http.routers.innovado.tls.certresolver=le
+        - traefik.http.routers.innovado.entrypoints=web
 
         # Puerto interno del contenedor (nginx expone 80)
         - traefik.http.services.innovado.loadbalancer.server.port=80
