@@ -28,9 +28,26 @@ internet  →  Cloudflare (TLS)  →  Servidor BARNA
 ## Pre-requisitos en el servidor
 
 - Puerto 80 libre en el host (no usado por nginx/apache del sistema).
-- DNS en Cloudflare: registro **A** para `innovado.barna.edu.do` apuntando a
-  la IP del servidor, con el proxy activo (nube naranja).
-- En Cloudflare → SSL/TLS, modo **Flexible** o **Full** (no Full strict).
+- Puerto 80 **abierto en el firewall** desde la red del frontal de BARNA.
+  Si `iptables -L INPUT -v -n` muestra un `REJECT all` antes del puerto 80,
+  agregar antes del reject:
+  ```bash
+  sudo iptables -I INPUT 5 -p tcp -m state --state NEW --dport 80 -j ACCEPT
+  sudo iptables-save | sudo tee /etc/iptables/rules.v4 > /dev/null
+  ```
+- DNS: `innovado.barna.edu.do` apuntando al frontal de BARNA (mismo A record
+  que `vitalia.barna.edu.do`). El frontal hace TLS termination y enruta a
+  este servidor por HTTP en el puerto 80.
+
+## Notas sobre el frontal de BARNA
+
+El frontal (alrededor de `10.50.10.72`) hace healthchecks del backend con
+`GET / Host: <IP-INTERNA>` (no preserva el Host original del cliente). Si
+Traefik responde 404 a esos healthchecks, el frontal marca el backend como
+DOWN y devuelve 502 a los clientes externos. Por eso los routers de cada
+servicio incluyen también `Host(\`10.50.230.30\`)` — esa IP corresponde a
+la LAN interna del servidor. Si cambia la IP del servidor, actualizar el
+label en cada `*-stack.yml`.
 
 ---
 
