@@ -19,6 +19,7 @@ FROM nginx:alpine
 COPY index.html metodologia.html styles.css /usr/share/nginx/html/
 COPY js/    /usr/share/nginx/html/js/
 COPY demos/ /usr/share/nginx/html/demos/
+COPY diagnostico-de-cultura-de-innovacion/ /usr/share/nginx/html/diagnostico-de-cultura-de-innovacion/
 
 # Healthcheck básico
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \

@@ -171,7 +171,7 @@ function renderDemo(order, niveles) {
       <span class="brand-sep" aria-hidden="true">·</span>
       <span class="brand-tagline">Management School</span>
     </div>
-    <div class="brand-context">Demo · Investigación INNOVA</div>
+    <a class="brand-context brand-context-link" href="../">← Centro de Investigación en Sostenibilidad</a>
   </div>
 </header>
 
@@ -359,7 +359,7 @@ const indexHtml = `<!doctype html>
       <span class="brand-sep" aria-hidden="true">·</span>
       <span class="brand-tagline">Management School</span>
     </div>
-    <div class="brand-context">Demos · Investigación INNOVA</div>
+    <a class="brand-context brand-context-link" href="../">← Centro de Investigación en Sostenibilidad</a>
   </div>
 </header>
 

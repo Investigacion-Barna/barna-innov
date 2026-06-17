@@ -76,6 +76,11 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+.brand-context-link {
+  text-decoration: none;
+  transition: color .12s ease;
+}
+.brand-context-link:hover { color: #fff; }
 
 /* ===== Hero ===== */
 .hero {

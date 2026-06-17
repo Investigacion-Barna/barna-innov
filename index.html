@@ -3,11 +3,290 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Diagnóstico de Cultura de Innovación · BARNA</title>
+<title>Centro de Investigación en Sostenibilidad · BARNA</title>
+<meta name="description" content="Centro de Investigación en Sostenibilidad de BARNA Management School. Investigación aplicada para incorporar la sostenibilidad en la educación empresarial y promover prácticas organizacionales responsables." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="styles.css" />
+<style>
+  /* Estilos específicos de la landing del Centro */
+  .center-hero {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    padding: 72px 0 64px;
+  }
+  .center-hero .eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 16px;
+  }
+  .center-hero h1 {
+    font-size: 38px;
+    line-height: 1.15;
+    font-weight: 700;
+    margin: 0 0 18px;
+    letter-spacing: -.3px;
+    max-width: 820px;
+  }
+  .center-hero p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: #cdd6e3;
+    margin: 0;
+    max-width: 720px;
+  }
+
+  /* Sección genérica */
+  .section { padding: 56px 0; }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 0 0 14px;
+    letter-spacing: -.2px;
+  }
+  .section-lead-large {
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.6;
+    margin: 0 0 32px;
+    max-width: 760px;
+  }
+
+  /* Líneas de investigación */
+  .lines-grid {
+    display: grid; grid-template-columns: 1fr; gap: 16px;
+    margin-top: 12px;
+  }
+  @media (min-width: 720px) { .lines-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .line-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--blue);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+  }
+  .line-num {
+    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 1.4px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .line-card h3 {
+    font-size: 17px; font-weight: 700;
+    color: var(--ink-strong); margin: 0;
+    line-height: 1.35;
+  }
+
+  /* Tarjeta destacada de la encuesta */
+  .survey-card {
+    background: var(--navy);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .survey-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-soft));
+  }
+  .survey-card .eyebrow {
+    color: var(--blue-soft);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .survey-card h2 {
+    margin: 0 0 14px;
+    color: #fff; font-size: 30px; font-weight: 700;
+    letter-spacing: -.3px; line-height: 1.15;
+  }
+  .survey-card p {
+    color: #e1e8f1; font-size: 16px;
+    line-height: 1.55; margin: 0 0 24px;
+    max-width: 700px;
+  }
+  .survey-meta {
+    display: flex; gap: 28px; flex-wrap: wrap;
+    margin: 0 0 26px; padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,.15);
+  }
+  .survey-meta-item {
+    display: block;
+  }
+  .survey-meta-num {
+    font-size: 24px; font-weight: 700;
+    color: var(--blue); display: block; line-height: 1;
+  }
+  .survey-meta-label {
+    font-size: 11px; font-weight: 600;
+    color: #b9c4d6;
+    text-transform: uppercase; letter-spacing: 1.4px;
+    margin-top: 6px; display: block;
+  }
+  .survey-actions {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .survey-btn {
+    background: #fff; color: var(--navy);
+    padding: 13px 24px; border-radius: var(--radius);
+    font-weight: 700; text-decoration: none;
+    font-size: 14px; letter-spacing: .3px;
+    transition: background .12s ease;
+    display: inline-block;
+  }
+  .survey-btn:hover { background: var(--panel); }
+  .survey-btn-outline {
+    background: transparent; color: #fff;
+    border: 1px solid var(--blue);
+  }
+  .survey-btn-outline:hover { background: var(--navy-deep); }
+
+  /* Directora */
+  .director-card {
+    display: grid; gap: 16px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 26px 28px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) { .director-card { grid-template-columns: 180px 1fr; align-items: center; } }
+  .director-avatar {
+    width: 100%; max-width: 180px;
+    aspect-ratio: 1;
+    background: var(--panel);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 1px;
+  }
+  .director-info .role {
+    font-size: 11px; font-weight: 700;
+    color: var(--blue); letter-spacing: 1.4px;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .director-info h3 {
+    margin: 0 0 8px;
+    font-size: 22px; font-weight: 700; color: var(--navy);
+  }
+  .director-info p {
+    margin: 4px 0; color: var(--muted);
+    font-size: 14px; line-height: 1.55;
+  }
+
+  /* Proyectos */
+  .projects-grid {
+    display: grid; grid-template-columns: 1fr; gap: 18px;
+  }
+  @media (min-width: 720px) { .projects-grid { grid-template-columns: 1fr 1fr; } }
+  .project-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--blue);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+  }
+  .project-card h3 {
+    margin: 0 0 10px;
+    font-size: 17px; font-weight: 700;
+    color: var(--navy); line-height: 1.35;
+  }
+  .project-card .meta {
+    font-size: 12px; color: var(--muted);
+    margin: 6px 0;
+  }
+  .project-card .meta strong {
+    color: var(--ink-strong); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .6px;
+    font-size: 11px;
+  }
+  .project-card .objective {
+    font-size: 14px; color: var(--ink);
+    line-height: 1.55; margin: 10px 0 0;
+  }
+  .funder-tag {
+    display: inline-block; margin-top: 12px;
+    background: var(--panel); color: var(--navy);
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .6px;
+  }
+
+  /* Publicaciones */
+  .pubs-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; gap: 10px;
+  }
+  .pubs-list li {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.5;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .pubs-list li::before {
+    content: '📄';
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Contacto */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+    background: var(--panel);
+    border-radius: var(--radius-lg);
+    padding: 28px 30px;
+  }
+  @media (min-width: 720px) { .contact-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .contact-item .label {
+    font-size: 11px; font-weight: 700;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: 1.4px; margin-bottom: 6px;
+  }
+  .contact-item .value {
+    font-size: 15px; color: var(--navy);
+    font-weight: 600;
+  }
+  .contact-item a { color: var(--navy); text-decoration: none; }
+  .contact-item a:hover { text-decoration: underline; }
+
+  /* Responsive ajustes */
+  @media (max-width: 540px) {
+    .center-hero { padding: 50px 0 48px; }
+    .center-hero h1 { font-size: 28px; }
+    .center-hero p { font-size: 15px; }
+    .section { padding: 42px 0; }
+    .section-title { font-size: 22px; }
+    .survey-card { padding: 28px 22px; }
+    .survey-card h2 { font-size: 24px; }
+    .survey-meta { gap: 18px; }
+    .director-avatar { max-width: 120px; }
+  }
+</style>
 </head>
 <body>
 
@@ -18,115 +297,172 @@
       <span class="brand-sep" aria-hidden="true">·</span>
       <span class="brand-tagline">Management School</span>
     </div>
-    <div class="brand-context">Investigación INNOVA</div>
+    <div class="brand-context">Centro de Investigación en Sostenibilidad</div>
   </div>
 </header>
 
-<section class="hero">
+<section class="center-hero">
   <div class="container">
-    <h1>Diagnóstico de Cultura de Innovación</h1>
-    <p class="hero-lead">Un instrumento de autodiagnóstico para que tu organización identifique su perfil cultural frente a la innovación y la transformación digital.</p>
+    <span class="eyebrow">Investigación aplicada · Sostenibilidad</span>
+    <h1>Centro de Investigación en Sostenibilidad</h1>
+    <p>Investigación, formación y proyectos para incorporar la sostenibilidad en la educación empresarial y promover prácticas organizacionales responsables en República Dominicana.</p>
   </div>
 </section>
 
-<main class="container">
-  <div id="progress" class="progress" aria-hidden="true">
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="progress-steps">
-      <span class="step active" data-step="1">1. Organización</span>
-      <span class="step" data-step="2">2. Cultura</span>
-      <span class="step" data-step="3">3. Reflexión</span>
-      <span class="step" data-step="4">4. Resultado</span>
+<main>
+
+  <!-- Misión -->
+  <section class="section" id="mision">
+    <div class="container">
+      <div class="section-eyebrow">Nuestra misión</div>
+      <h2 class="section-title">Investigación aplicada con impacto local</h2>
+      <p class="section-lead-large">A través de investigación aplicada, el Centro desarrolla soluciones innovadoras a los desafíos de sostenibilidad en colaboración con empresas, comunidades y organizaciones. Integramos extensión social, voluntariado y divulgación para que el conocimiento generado se traduzca en cambio organizacional real.</p>
     </div>
-  </div>
+  </section>
 
-  <form id="wizard" novalidate>
-    <!-- Honeypot anti-bot: oculto para humanos, irresistible para bots. -->
-    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
-      <label for="hp-website">Sitio web (no rellenar)</label>
-      <input type="text" id="hp-website" name="website" tabindex="-1" autocomplete="off" />
-    </div>
-
-    <!-- Paso 1: Demográficas -->
-    <section class="step-panel" id="step-1" data-step="1">
-      <h2>1 · Datos de la organización</h2>
-      <p class="lead">Cuéntanos brevemente sobre tu empresa y tu rol. Toma 1 minuto.</p>
-      <div id="demogFields"></div>
-      <div class="nav">
-        <button type="button" class="primary" data-next>Continuar</button>
-      </div>
-    </section>
-
-    <!-- Paso 2: Likert -->
-    <section class="step-panel hidden" id="step-2" data-step="2">
-      <h2>2 · Cultura cotidiana</h2>
-      <p class="lead">Para cada afirmación, selecciona el número que mejor describe la realidad cotidiana de tu organización.</p>
-      <div class="scale-legend" aria-hidden="true">
-        <span>1 · Totalmente en desacuerdo</span>
-        <span>5 · Totalmente de acuerdo</span>
-      </div>
-      <div id="likertGroups"></div>
-      <div class="nav">
-        <button type="button" data-prev>Atrás</button>
-        <button type="button" class="primary" data-next>Continuar</button>
-      </div>
-    </section>
-
-    <!-- Paso 3: Abiertas -->
-    <section class="step-panel hidden" id="step-3" data-step="3">
-      <h2>3 · Reflexiones abiertas</h2>
-      <p class="lead">Cinco preguntas cualitativas. Sirven a la investigación y son opcionales si no tienes tiempo, pero tus respuestas enriquecen mucho el análisis.</p>
-      <div id="openFields"></div>
-      <div class="nav">
-        <button type="button" data-prev>Atrás</button>
-        <button type="submit" class="primary" id="submitBtn">Ver mi resultado</button>
-      </div>
-    </section>
-
-    <!-- Paso 4: Resultado -->
-    <section class="step-panel hidden" id="step-4" data-step="4">
-      <h2>4 · Tu perfil de cultura de innovación</h2>
-
-      <div id="resultStatus" class="status"></div>
-
-      <div class="result-grid">
-        <div class="radar-wrap">
-          <canvas id="radar" aria-label="Gráfico de araña con las 8 dimensiones"></canvas>
+  <!-- Líneas de investigación -->
+  <section class="section" id="lineas" style="background: var(--panel);">
+    <div class="container">
+      <div class="section-eyebrow">Líneas fundamentales</div>
+      <h2 class="section-title">Tres líneas de investigación</h2>
+      <div class="lines-grid">
+        <div class="line-card">
+          <span class="line-num">Línea 01</span>
+          <h3>Modelos y prácticas de negocio sostenibles</h3>
         </div>
-        <div class="profile-card">
-          <div class="profile-tag">Perfil identificado</div>
-          <h3 id="profileName">—</h3>
-          <p class="profile-condition" id="profileCondition"></p>
-          <p id="profileDescription"></p>
-          <div class="risk-box">
-            <strong>Implicaciones para tu transformación</strong>
-            <p id="profileRisk"></p>
+        <div class="line-card">
+          <span class="line-num">Línea 02</span>
+          <h3>Soluciones orientadas a alcanzar los Objetivos de Desarrollo Sostenible</h3>
+        </div>
+        <div class="line-card">
+          <span class="line-num">Línea 03</span>
+          <h3>Iniciativas educativas y comunitarias para la sostenibilidad</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Encuesta destacada -->
+  <section class="section" id="diagnostico">
+    <div class="container">
+      <div class="section-eyebrow">Herramienta abierta del Centro</div>
+      <h2 class="section-title">Diagnóstico de Cultura de Innovación</h2>
+      <p class="section-lead-large">Un instrumento de autodiagnóstico desarrollado por el Centro para que tu organización identifique su perfil cultural frente a la innovación y la transformación digital. Pensado para empresas dominicanas y validado con respuestas reales.</p>
+
+      <div class="survey-card">
+        <div class="eyebrow">Comienza ahora</div>
+        <h2>¿Cómo es la cultura de innovación en tu empresa?</h2>
+        <p>Completa 50 preguntas en ~12 minutos. Al terminar recibes al instante un gráfico de araña con las 8 dimensiones culturales y el perfil que mejor describe a tu organización, con lectura personalizada por dimensión.</p>
+
+        <div class="survey-meta">
+          <div class="survey-meta-item">
+            <span class="survey-meta-num">50</span>
+            <span class="survey-meta-label">Ítems Likert</span>
+          </div>
+          <div class="survey-meta-item">
+            <span class="survey-meta-num">8</span>
+            <span class="survey-meta-label">Dimensiones</span>
+          </div>
+          <div class="survey-meta-item">
+            <span class="survey-meta-num">5</span>
+            <span class="survey-meta-label">Perfiles culturales</span>
+          </div>
+          <div class="survey-meta-item">
+            <span class="survey-meta-num">~12 min</span>
+            <span class="survey-meta-label">Para completar</span>
           </div>
         </div>
+
+        <div class="survey-actions">
+          <a href="diagnostico-de-cultura-de-innovacion/" class="survey-btn">Empezar el diagnóstico →</a>
+          <a href="metodologia.html" class="survey-btn survey-btn-outline">Ver metodología</a>
+          <a href="demos/" class="survey-btn survey-btn-outline">Galería de resultados</a>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <h3 class="section-title">Detalle por dimensión</h3>
-      <p class="section-lead">Tu promedio, el nivel y una lectura corta de lo que ese resultado significa para tu organización.</p>
-      <div id="scoresGrid" class="dim-grid"></div>
-
-      <div class="nav no-print">
-        <button type="button" onclick="window.print()">Descargar mi resultado (PDF)</button>
-        <button type="button" onclick="location.reload()">Hacer otro diagnóstico</button>
+  <!-- Dirección -->
+  <section class="section" id="direccion" style="background: var(--panel);">
+    <div class="container">
+      <div class="section-eyebrow">Dirección</div>
+      <h2 class="section-title">Liderazgo del Centro</h2>
+      <div class="director-card">
+        <div class="director-avatar" aria-hidden="true">KPT</div>
+        <div class="director-info">
+          <div class="role">Directora</div>
+          <h3>Dra. Karina Pérez Teruel</h3>
+          <p>Doctora en Ciencias Técnicas por la Universidad de las Ciencias Informáticas (La Habana).</p>
+          <p>Especialista en datos, innovación tecnológica y sostenibilidad. Ha liderado proyectos con el PNUD y trabaja en sistemas energéticos basados en residuos orgánicos.</p>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </form>
+  <!-- Proyectos -->
+  <section class="section" id="proyectos">
+    <div class="container">
+      <div class="section-eyebrow">En curso</div>
+      <h2 class="section-title">Proyectos de investigación actuales</h2>
+      <div class="projects-grid">
+        <article class="project-card">
+          <h3>Modelo de empoderamiento digital para autogestión de salud</h3>
+          <p class="meta"><strong>Investigadora principal</strong><br>Dra. Karina Pérez Teruel</p>
+          <p class="objective">Desarrollar un sistema de promoción de salud mediante tecnologías informáticas para mujeres jóvenes en Villa Mella, integrando educación, prevención y autogestión.</p>
+          <span class="funder-tag">FONDOCYT</span>
+        </article>
+        <article class="project-card">
+          <h3>Herramientas digitales de planificación urbana y gestión de riesgos</h3>
+          <p class="meta"><strong>Investigadora principal</strong><br>Ana María Moyano Molina</p>
+          <p class="objective">Crear herramientas unificadas de planificación, gestión de riesgos y participación pública para municipios resilientes y adaptados al cambio climático. Caso de estudio: Bajos de Haina.</p>
+          <span class="funder-tag">FONDOCYT</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publicaciones -->
+  <section class="section" id="publicaciones" style="background: var(--panel);">
+    <div class="container">
+      <div class="section-eyebrow">Publicaciones</div>
+      <h2 class="section-title">Informes recientes</h2>
+      <ul class="pubs-list">
+        <li>Informe Gobierno Corporativo en la República Dominicana</li>
+        <li>Compendio Casos Dominicanos Sostenibilidad</li>
+        <li>Consejos de Administración en República Dominicana: 10 retos para mejorar su funcionamiento y calidad de gobierno</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section class="section" id="contacto">
+    <div class="container">
+      <div class="section-eyebrow">Contacto</div>
+      <h2 class="section-title">Conversemos sobre tu organización</h2>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <div class="label">Correo</div>
+          <div class="value"><a href="mailto:investigaciones@barna.edu.do">investigaciones@barna.edu.do</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="label">Teléfono</div>
+          <div class="value"><a href="tel:+18096278935">+1 809-627-8935</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="label">Ubicación</div>
+          <div class="value">Av. Gregorio Luperón, casi esq. Guarocuya<br>Santo Domingo 11113</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<footer class="footer no-print">
+<footer class="footer">
   <div class="container">
-    <small>Diagnóstico de Cultura de Innovación · 8 dimensiones · 50 ítems Likert. © BARNA · <a href="metodologia.html">Ver metodología</a></small>
+    <small>Centro de Investigación en Sostenibilidad · BARNA Management School. © 2026.</small>
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script src="js/questions.js"></script>
-<script src="js/profiles.js"></script>
-<script src="js/app.js"></script>
 </body>
 </html>
