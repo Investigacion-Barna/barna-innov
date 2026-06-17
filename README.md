@@ -79,6 +79,18 @@ El `.dockerignore` excluye automáticamente el `.xlsx`, `reportes/`,
 `scripts/` y `apps-script/`, así sólo el contenido público entra en la
 imagen.
 
+## Producción en Docker Swarm con Traefik
+
+Para el servidor de BARNA donde ya corren otros servicios bajo Docker
+Swarm (ej. `vitalia_backend`), la carpeta [`deploy/`](deploy/) contiene los
+stacks de **Traefik** (reverse proxy + TLS automático) y de este proyecto,
+configurados para rutear por dominio:
+
+- `vitalia.barna.edu.do` → `vitalia_backend`
+- `innovado.barna.edu.do` → este proyecto
+
+Guía completa en [deploy/README.md](deploy/README.md).
+
 Pruebas del motor de perfiles: abrir
 `http://localhost:8000/js/profiles.test.html`. Debe mostrar **11/11 PASS**.
 
