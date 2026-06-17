@@ -1,0 +1,17 @@
+# Diagnóstico de Cultura de Innovación · BARNA
+#
+# Para correr localmente:
+#   docker compose up -d
+#   # Abrir http://localhost:8080
+#
+# Para detener:
+#   docker compose down
+
+services:
+  web:
+    build: .
+    image: barna-innov:latest
+    container_name: barna-innov
+    ports:
+      - "8080:80"
+    restart: unless-stopped

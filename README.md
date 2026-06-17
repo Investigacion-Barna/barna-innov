@@ -64,6 +64,21 @@ python3 -m http.server 8000
 # abrir http://localhost:8000
 ```
 
+O con Docker (imagen ~93 MB basada en `nginx:alpine`):
+
+```bash
+docker compose up -d         # construye y arranca en http://localhost:8080
+docker compose down          # detiene
+
+# Sin compose:
+docker build -t barna-innov .
+docker run -d --name barna-innov -p 8080:80 barna-innov
+```
+
+El `.dockerignore` excluye automáticamente el `.xlsx`, `reportes/`,
+`scripts/` y `apps-script/`, así sólo el contenido público entra en la
+imagen.
+
 Pruebas del motor de perfiles: abrir
 `http://localhost:8000/js/profiles.test.html`. Debe mostrar **11/11 PASS**.
 

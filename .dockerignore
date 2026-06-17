@@ -1,0 +1,29 @@
+# Datos sensibles · NO entran en la imagen
+*.xlsx
+*.xls
+*.csv
+reportes/
+
+# Infraestructura de desarrollo y herramientas
+scripts/
+apps-script/
+node_modules/
+.git/
+.gitignore
+.gitattributes
+.dockerignore
+Dockerfile
+compose.yml
+docker-compose.yml
+
+# Documentación interna
+README.md
+.claude/
+
+# Editores / sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+*.swp
