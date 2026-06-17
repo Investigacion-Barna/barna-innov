@@ -32,19 +32,22 @@ internet  →   │ Traefik :80 :443 │  (en el host)
 
 ---
 
-## Paso 1 · Crear la red overlay compartida
+## Paso 1 · Verificar la red existente
 
-Sólo se hace una vez. Esta red la usan Traefik y todos los servicios que
-quieras exponer.
+`vitalia-net` ya existe en el servidor (es la red overlay que usan
+`vitalia_backend` y `vitalia_postgres`). Reutilizamos esa misma red para
+que Traefik pueda hablar tanto con vitalia como con innovado.
+
+Verifica que esté creada como **overlay attachable**:
 
 ```bash
-docker network create --driver=overlay --attachable traefik-public
+docker network ls | grep vitalia-net
+docker network inspect vitalia-net --format '{{.Driver}} {{.Attachable}}'
+# debe imprimir: overlay true
 ```
 
-Verifica:
-```bash
-docker network ls | grep traefik-public
-```
+Si no es attachable, hay que recrearla con `--attachable` o forzarla
+mediante `docker network update`. Si todo está bien, sigue al paso 2.
 
 ---
 
@@ -66,12 +69,11 @@ manda avisos de expiración a esa dirección.
 ## Paso 3 · Modificar el stack de vitalia
 
 Tu servicio `vitalia_backend` hoy expone el puerto 80 directamente
-(`*:80->3000/tcp`). Eso entra en conflicto con Traefik. Hay que:
+(`*:80->3000/tcp`). Eso entra en conflicto con Traefik. Como vitalia ya
+está conectado a `vitalia-net` (es como habla con postgres), sólo hay que:
 
 1. **Quitar la sección `ports`** del servicio.
-2. **Conectar el servicio a la red `traefik-public`** (además de las que ya
-   use internamente para hablar con `vitalia_postgres`).
-3. **Agregar los labels de Traefik** en `deploy.labels`.
+2. **Agregar los labels de Traefik** en `deploy.labels`.
 
 Tu compose/stack original de vitalia probablemente se ve así:
 
@@ -82,6 +84,8 @@ services:
     image: backend-vitalia:latest
     ports:
       - "80:3000"            # ← QUITAR
+    networks:
+      - vitalia-net
     deploy:
       replicas: 2
     # ...
@@ -96,23 +100,16 @@ services:
     image: backend-vitalia:latest
     # ports: ya no, Traefik se encarga
     networks:
-      - default              # red interna del stack (postgres)
-      - traefik-public       # ← NUEVO
+      - vitalia-net          # ya estaba
     deploy:
       replicas: 2
       labels:                # ← NUEVO bloque
         - traefik.enable=true
-        - traefik.docker.network=traefik-public
+        - traefik.docker.network=vitalia-net
         - traefik.http.routers.vitalia.rule=Host(`vitalia.barna.edu.do`)
         - traefik.http.routers.vitalia.entrypoints=websecure
         - traefik.http.routers.vitalia.tls.certresolver=le
         - traefik.http.services.vitalia.loadbalancer.server.port=3000
-
-# Al final del archivo:
-networks:
-  default:
-  traefik-public:
-    external: true           # ← reconoce la red que creaste en el paso 1
 ```
 
 > **Importante**: los labels van bajo `deploy.labels`, NO bajo `labels` del
@@ -212,7 +209,7 @@ El `--force` reinicia el servicio aunque el tag no haya cambiado.
 
 | Comando | Esperado |
 |---|---|
-| `docker network ls \| grep traefik-public` | red existe |
+| `docker network inspect vitalia-net --format '{{.Driver}}'` | `overlay` |
 | `docker service ls` | traefik, vitalia, innovado todos `1/1` o `2/2` |
 | `docker service logs traefik_traefik` | sin errores de ACME ni de Swarm |
 | `curl -I https://vitalia.barna.edu.do` | 200 con cert válido |

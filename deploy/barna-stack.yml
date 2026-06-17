@@ -2,7 +2,7 @@
 # Stack para Docker Swarm con routing por Traefik.
 #
 # Pre-requisitos:
-#   1. Red 'traefik-public' creada (overlay attachable)
+#   1. Red 'vitalia-net' existente (la misma que ya usa vitalia)
 #   2. Stack 'traefik' desplegado y corriendo
 #   3. Imagen 'barna-innov:latest' construida en el nodo (o en registry)
 #   4. DNS: innovado.barna.edu.do → IP del servidor
@@ -15,7 +15,7 @@ services:
   web:
     image: barna-innov:latest
     networks:
-      - traefik-public
+      - vitalia-net
     deploy:
       replicas: 1
       restart_policy:
@@ -23,7 +23,7 @@ services:
       labels:
         # Habilitar descubrimiento por Traefik
         - traefik.enable=true
-        - traefik.docker.network=traefik-public
+        - traefik.docker.network=vitalia-net
 
         # Router HTTPS para innovado.barna.edu.do
         - traefik.http.routers.innovado.rule=Host(`innovado.barna.edu.do`)
@@ -34,5 +34,5 @@ services:
         - traefik.http.services.innovado.loadbalancer.server.port=80
 
 networks:
-  traefik-public:
+  vitalia-net:
     external: true

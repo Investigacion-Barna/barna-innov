@@ -13,7 +13,7 @@ services:
       # === Provider Swarm: descubre servicios con labels traefik.* ===
       - --providers.swarm=true
       - --providers.swarm.exposedByDefault=false
-      - --providers.swarm.network=traefik-public
+      - --providers.swarm.network=vitalia-net
 
       # === Entrypoints ===
       - --entrypoints.web.address=:80
@@ -52,7 +52,7 @@ services:
       - traefik-letsencrypt:/letsencrypt
 
     networks:
-      - traefik-public
+      - vitalia-net
 
     deploy:
       replicas: 1
@@ -66,5 +66,5 @@ volumes:
   traefik-letsencrypt:
 
 networks:
-  traefik-public:
+  vitalia-net:
     external: true
