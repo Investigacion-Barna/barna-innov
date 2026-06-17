@@ -10,6 +10,13 @@ csv_out*/
 # Reportes personalizados por encuestado · contienen emails y respuestas reales
 reportes/
 
+# Llaves SSH · NUNCA subir al repo
+*.ppk
+*.pem
+id_rsa*
+id_ed25519*
+*_SSH_Priv*
+
 # Logs y editores
 *.log
 .DS_Store

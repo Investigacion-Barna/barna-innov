@@ -23,7 +23,7 @@ services:
       labels:
         # Habilitar descubrimiento por Traefik
         - traefik.enable=true
-        - traefik.docker.network=vitalia-net
+        - traefik.swarm.network=vitalia-net
 
         # Router HTTP para innovado.barna.edu.do (Cloudflare hace el TLS)
         - traefik.http.routers.innovado.rule=Host(`innovado.barna.edu.do`)

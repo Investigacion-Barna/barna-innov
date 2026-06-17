@@ -92,7 +92,7 @@ services:
       replicas: 2
       labels:                # ← NUEVO bloque
         - traefik.enable=true
-        - traefik.docker.network=vitalia-net
+        - traefik.swarm.network=vitalia-net
         - traefik.http.routers.vitalia.rule=Host(`vitalia.barna.edu.do`)
         - traefik.http.routers.vitalia.entrypoints=web
         - traefik.http.services.vitalia.loadbalancer.server.port=3000
