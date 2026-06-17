@@ -7,17 +7,19 @@
  */
 
 :root {
-  --navy:        #003057;
+  /* Paleta institucional alineada con barna.edu.do (variables Astra) */
+  --navy:        #003057;    /* navy institucional (topbar, hero, cards oscuros) */
   --navy-deep:   #001f3a;
-  --blue:        #6C99D0;
-  --blue-soft:   #87ACD9;
-  --panel:       #F0F5FA;
+  --blue:        #046bd2;    /* azul primario BARNA (links, CTAs, accents) */
+  --blue-hover:  #045cb4;    /* azul hover BARNA */
+  --blue-soft:   #6C99D0;    /* azul medio (overlays, accents sutiles) */
+  --panel:       #F0F5FA;    /* gris/azul claro BARNA (fondos alternativos) */
   --bg:          #ffffff;
   --surface:     #ffffff;
   --ink:         #2c2d33;
-  --ink-strong:  #111111;
-  --muted:       #4A4F55;
-  --line:        #d8e0ec;
+  --ink-strong:  #1e293b;    /* texto fuerte BARNA */
+  --muted:       #334155;    /* texto secundario BARNA */
+  --line:        #D1D5DB;    /* borders BARNA */
   --line-soft:   #eef1f6;
   --ok:          #239438;
   --warn:        #b07d1e;
