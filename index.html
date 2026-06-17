@@ -12,10 +12,24 @@
 <style>
   /* Estilos específicos de la landing del Centro */
   .center-hero {
-    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    position: relative;
+    background: var(--navy);
     color: #fff;
-    padding: 72px 0 64px;
+    padding: 96px 0 84px;
+    overflow: hidden;
   }
+  .center-hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('assets/img/sostenibilidad-hero.webp');
+    background-size: cover;
+    background-position: center;
+    opacity: .28;
+  }
+  .center-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,31,58,.55) 0%, rgba(0,48,87,.85) 100%);
+  }
+  .center-hero .container { position: relative; z-index: 2; }
   .center-hero .eyebrow {
     display: inline-block;
     font-size: 11px;
@@ -225,12 +239,23 @@
     font-size: 14px; color: var(--ink);
     line-height: 1.55; margin: 10px 0 0;
   }
-  .funder-tag {
-    display: inline-block; margin-top: 12px;
-    background: var(--panel); color: var(--navy);
-    padding: 4px 12px; border-radius: 999px;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: .6px;
+  .funder {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .funder-label {
+    font-size: 10px; font-weight: 700;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: 1.4px;
+  }
+  .funder-logo {
+    height: 28px; width: auto;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 4px 8px;
   }
 
   /* Publicaciones */
@@ -302,6 +327,8 @@
 </header>
 
 <section class="center-hero">
+  <div class="center-hero-bg" aria-hidden="true"></div>
+  <div class="center-hero-overlay" aria-hidden="true"></div>
   <div class="container">
     <span class="eyebrow">Investigación aplicada · Sostenibilidad</span>
     <h1>Centro de Investigación en Sostenibilidad</h1>
@@ -409,13 +436,19 @@
           <h3>Modelo de empoderamiento digital para autogestión de salud</h3>
           <p class="meta"><strong>Investigadora principal</strong><br>Dra. Karina Pérez Teruel</p>
           <p class="objective">Desarrollar un sistema de promoción de salud mediante tecnologías informáticas para mujeres jóvenes en Villa Mella, integrando educación, prevención y autogestión.</p>
-          <span class="funder-tag">FONDOCYT</span>
+          <div class="funder">
+            <span class="funder-label">Financiado por</span>
+            <img src="assets/img/fondocyt.jpg" alt="FONDOCYT" class="funder-logo">
+          </div>
         </article>
         <article class="project-card">
           <h3>Herramientas digitales de planificación urbana y gestión de riesgos</h3>
           <p class="meta"><strong>Investigadora principal</strong><br>Ana María Moyano Molina</p>
           <p class="objective">Crear herramientas unificadas de planificación, gestión de riesgos y participación pública para municipios resilientes y adaptados al cambio climático. Caso de estudio: Bajos de Haina.</p>
-          <span class="funder-tag">FONDOCYT</span>
+          <div class="funder">
+            <span class="funder-label">Financiado por</span>
+            <img src="assets/img/fondocyt.jpg" alt="FONDOCYT" class="funder-logo">
+          </div>
         </article>
       </div>
     </div>

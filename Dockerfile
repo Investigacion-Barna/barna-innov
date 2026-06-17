@@ -17,6 +17,7 @@ FROM nginx:alpine
 
 # Copiar el contenido estático al document root de nginx
 COPY index.html metodologia.html styles.css /usr/share/nginx/html/
+COPY assets/ /usr/share/nginx/html/assets/
 COPY js/    /usr/share/nginx/html/js/
 COPY demos/ /usr/share/nginx/html/demos/
 COPY diagnostico-de-cultura-de-innovacion/ /usr/share/nginx/html/diagnostico-de-cultura-de-innovacion/
